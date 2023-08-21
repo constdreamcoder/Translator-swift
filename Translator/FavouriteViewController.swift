@@ -1,5 +1,5 @@
 //
-//  ViewController.swift
+//  FavouriteViewController.swift
 //  Translator
 //
 //  Created by SUCHAN CHANG on 2023/08/18.
@@ -7,13 +7,12 @@
 
 import UIKit
 
-class ViewController: UIViewController {
+class FavouriteViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
+
+        navigationItem.title = "Favourite"
     }
 
-
 }
-
