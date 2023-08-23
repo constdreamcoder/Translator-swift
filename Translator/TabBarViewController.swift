@@ -7,7 +7,7 @@
 
 import UIKit
 
-class TabBarViewController: UITabBarController {
+final class TabBarViewController: UITabBarController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -16,20 +16,18 @@ class TabBarViewController: UITabBarController {
         let favouriteVC = UINavigationController(rootViewController: FavouriteViewController())
        
         translateVC.tabBarItem = UITabBarItem(
-            title: "Translate",
+            title: "번역",
             image: UIImage(named: "translateTabBarIcon"),
-            selectedImage: UIImage(named: "translateTabBarIcon")// todo: 대표 색깔을 채워서 표시하기
+            selectedImage: UIImage(named: "translateTabBarIcon")// TODO: - 대표 색깔을 채워서 표시하기
         )
         favouriteVC.tabBarItem = UITabBarItem(
-            title: "Favourite",
+            title: "즐겨찾기",
             image: UIImage(named: "favouriteTabBarIcon"),
-            selectedImage: UIImage(named: "favouriteTabBarIcon") // todo: 대표 색깔을 채워서 표시하기
+            selectedImage: UIImage(named: "favouriteTabBarIcon") // TODO: - 대표 색깔을 채워서 표시하기
         )
         
         viewControllers = [translateVC, favouriteVC]
+        
+        UITabBar.appearance().backgroundColor = UIColor.white
     }
-    
-    
-    
-    
 }

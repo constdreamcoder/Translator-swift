@@ -7,14 +7,14 @@
 
 import UIKit
 
-class HistoryViewController: UIViewController {
+final class HistoryViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        navigationItem.title = "History"
+        navigationItem.title = "히스토리"
         navigationItem.rightBarButtonItem = UIBarButtonItem(
-            title: "Clear All",
+            title: "모두 지우기",
             style: .done,
             target: self,
             action: #selector(clearAllHistoryRecords)

@@ -7,12 +7,12 @@
 
 import UIKit
 
-class FavouriteViewController: UIViewController {
+final class FavouriteViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        navigationItem.title = "Favourite"
+        navigationItem.title = "즐겨찾기"
     }
 
 }
