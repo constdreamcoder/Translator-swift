@@ -19,6 +19,7 @@ final class TranslateScrollView: UIScrollView {
         
         self.showsVerticalScrollIndicator = false
         self.showsHorizontalScrollIndicator = false
+        contentView.backgroundColor = UIColor(red: 0.93, green: 0.93, blue: 0.93, alpha: 1)
     }
     
     required init?(coder: NSCoder) {

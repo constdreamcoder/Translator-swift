@@ -18,6 +18,7 @@
 		006C553A2A8F52C6009E24BA /* TabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 006C55392A8F52C6009E24BA /* TabBarViewController.swift */; };
 		006C553C2A8F53B7009E24BA /* FavouriteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 006C553B2A8F53B7009E24BA /* FavouriteViewController.swift */; };
 		006C553E2A8F5C14009E24BA /* HistoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 006C553D2A8F5C14009E24BA /* HistoryViewController.swift */; };
+		009098172A97527300D1745B /* CustomTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 009098162A97527300D1745B /* CustomTableViewCell.swift */; };
 		00E8D9282A939EB7004F24CE /* TopSectionOfTranslate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00E8D9272A939EB7004F24CE /* TopSectionOfTranslate.swift */; };
 /* End PBXBuildFile section */
 
@@ -35,6 +36,7 @@
 		006C55392A8F52C6009E24BA /* TabBarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarViewController.swift; sourceTree = "<group>"; };
 		006C553B2A8F53B7009E24BA /* FavouriteViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavouriteViewController.swift; sourceTree = "<group>"; };
 		006C553D2A8F5C14009E24BA /* HistoryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryViewController.swift; sourceTree = "<group>"; };
+		009098162A97527300D1745B /* CustomTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTableViewCell.swift; sourceTree = "<group>"; };
 		00E8D9272A939EB7004F24CE /* TopSectionOfTranslate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopSectionOfTranslate.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -90,6 +92,7 @@
 		00E621862A934E4C00031973 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				009098162A97527300D1745B /* CustomTableViewCell.swift */,
 				00E8D9262A939E78004F24CE /* Translate */,
 			);
 			name = Views;
@@ -189,6 +192,7 @@
 			files = (
 				00377CBE2A94AE59008442FD /* MiddleSectionOfTranslate.swift in Sources */,
 				00377CC02A94CB39008442FD /* BottomSectionOfTranslate.swift in Sources */,
+				009098172A97527300D1745B /* CustomTableViewCell.swift in Sources */,
 				006C553A2A8F52C6009E24BA /* TabBarViewController.swift in Sources */,
 				006C552A2A8F4C38009E24BA /* TranslateViewController.swift in Sources */,
 				00377CC22A94D98A008442FD /* TranslateScrollView.swift in Sources */,

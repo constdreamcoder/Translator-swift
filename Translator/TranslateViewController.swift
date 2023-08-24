@@ -31,7 +31,7 @@ final class TranslateViewController: UIViewController {
             action: #selector(moveToHistory)
         )
                 
-        setupView()
+        setupViews()
     }
     
     @objc func moveToHistory() {
@@ -42,7 +42,7 @@ final class TranslateViewController: UIViewController {
 }
 
 private extension TranslateViewController {
-    func setupView() {
+    func setupViews() {
         view.addSubview(scrollView)
         
         // MARK: - Configure The Constraints of Translate UI ScrollView
