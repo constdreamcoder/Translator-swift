@@ -7,7 +7,7 @@
 
 import UIKit
 
-class CustomTableViewCell: UITableViewCell {
+final class CustomTableViewCell: UITableViewCell {
     static let identifier = "CustomTableViewCell"
     
     private lazy var sourceLanguageLabel: UILabel = {

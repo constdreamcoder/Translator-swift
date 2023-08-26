@@ -7,7 +7,13 @@
 
 import UIKit
 
+protocol MiddleSectionOfTranslateDelegate: AnyObject {
+    func translateButtonTapped(_ inputText: String)
+}
+
 final class MiddleSectionOfTranslate: UIView {
+    
+    weak var delegate: MiddleSectionOfTranslateDelegate?
     
     private lazy var sourceLangaugeLabel: UILabel = {
         let label = UILabel()
@@ -67,7 +73,7 @@ final class MiddleSectionOfTranslate: UIView {
         return button
     }()
     
-    private lazy var translateButton: UIButton = {
+   private lazy var translateButton: UIButton = {
         let button = UIButton()
         button.setTitle("번역하기", for: .normal)
         button.setTitleColor(.white, for: .normal)
@@ -148,5 +154,12 @@ final class MiddleSectionOfTranslate: UIView {
             translateButton.centerYAnchor.constraint(equalTo: voiceInputButton.centerYAnchor)
             
         ])
+    }
+}
+
+extension MiddleSectionOfTranslate {
+    @objc private func translateButtonTapped() {
+        print(#function)
+        delegate?.translateButtonTapped(inputTextView.text)
     }
 }

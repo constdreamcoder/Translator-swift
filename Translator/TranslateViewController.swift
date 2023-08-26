@@ -30,8 +30,10 @@ final class TranslateViewController: UIViewController {
             target: self,
             action: #selector(moveToHistory)
         )
-                
+        
         setupViews()
+        middleSection.delegate = self
+//        setupUserEventsBehaviors()
     }
     
     @objc func moveToHistory() {
@@ -41,6 +43,7 @@ final class TranslateViewController: UIViewController {
     }
 }
 
+// MARK: - Setup Views
 private extension TranslateViewController {
     func setupViews() {
         view.addSubview(scrollView)
@@ -56,6 +59,22 @@ private extension TranslateViewController {
         
         // MARK: - Configure The Contraints of Bottom Section of Translate UI
         bottomSection.configureUI(scrollView.getContentView(), middleSection)
+    }
+}
+
+// MARK: - Set up User Events' Behavior
+extension TranslateViewController: MiddleSectionOfTranslateDelegate {
+    func translateButtonTapped(_ inputText: String) {
+        TranslatedTextManager().translate(inputText: inputText) { [weak self] result in
+            guard let weakSelf = self else { return }
+            switch result {
+                case .success(let response):
+                    weakSelf.bottomSection.updateResultLabel(response.translatedText)
+                case .failure(let error):
+                    print(error.localizedDescription)
+            }
+        }
+        
     }
 }
 
@@ -78,9 +97,7 @@ extension MiddleSectionOfTranslate {
         print(#function)
     }
     
-    @objc func translateButtonTapped() {
-        print(#function)
-    }
+    
 }
 
 extension BottomSectionOfTranslate {
@@ -100,4 +117,4 @@ extension BottomSectionOfTranslate {
         print(#function)
     }
 }
-    
+

@@ -39,7 +39,7 @@ final class BottomSectionOfTranslate: UIView {
         return stackView
     }()
     
-    private lazy var resultLabel: UILabel = {
+   private lazy var resultLabel: UILabel = {
         let label = UILabel()
         label.font = .systemFont(ofSize: 20.0, weight: .semibold)
 //        label.text = "¿Hola como estas?"
@@ -165,4 +165,13 @@ final class BottomSectionOfTranslate: UIView {
         ])
     }
     
+}
+
+extension BottomSectionOfTranslate {
+    func updateResultLabel(_ translatedText: String?) {
+        DispatchQueue.main.async { [weak self] in
+            guard let weakSelf = self else { return }
+            weakSelf.resultLabel.text = translatedText
+        }
+    }
 }

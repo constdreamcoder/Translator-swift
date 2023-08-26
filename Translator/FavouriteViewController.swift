@@ -24,7 +24,8 @@ final class FavouriteViewController: UIViewController {
         super.viewDidLoad()
 
         navigationItem.title = "즐겨찾기"
-        
+        navigationController?.navigationBar.prefersLargeTitles = true
+
         setupViews()
     }
 
