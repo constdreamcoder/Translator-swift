@@ -7,8 +7,14 @@
 
 import UIKit
 
+protocol TopSectionOfTranslateDelegate: AnyObject {
+    func stackViewTapped(_ languageLabel: UILabel, _ type: Type)
+}
+
 final class TopSectionOfTranslate: UIStackView {
-        
+    
+    var delegate: TopSectionOfTranslateDelegate?
+    
     // source language
     private lazy var sourceLanguageNationalFlagImageView: UIImageView = {
         let imageView = UIImageView()
@@ -33,6 +39,9 @@ final class TopSectionOfTranslate: UIStackView {
             sourceLanguageNationalFlagImageView,
             sourceLanguageLabel
         ].forEach { stackView.addArrangedSubview($0) }
+        let tapGR = UITapGestureRecognizer(target: self, action: #selector(sourceStackViewTapped))
+        stackView.addGestureRecognizer(tapGR)
+        stackView.isUserInteractionEnabled = true
         return stackView
     }()
     
@@ -68,6 +77,9 @@ final class TopSectionOfTranslate: UIStackView {
             targetLanguageLabel,
             targetLanguageNationalFlagImageView
         ].forEach { stackView.addArrangedSubview($0) }
+        let tapGR = UITapGestureRecognizer(target: self, action: #selector(targetStackViewTapped))
+        stackView.addGestureRecognizer(tapGR)
+        stackView.isUserInteractionEnabled = true
         return stackView
     }()
     
@@ -90,7 +102,7 @@ final class TopSectionOfTranslate: UIStackView {
         self.layer.shadowOpacity = 1
         self.layer.shadowRadius = 3
         self.layer.shadowOffset = CGSize(width: 0, height: 1)
-
+        
     }
     
     required init(coder: NSCoder) {
@@ -115,5 +127,17 @@ final class TopSectionOfTranslate: UIStackView {
             self.trailingAnchor.constraint(equalTo: superUIView.trailingAnchor, constant: -23.0),
             self.heightAnchor.constraint(equalToConstant: 54.0),
         ])
+    }
+}
+
+extension TopSectionOfTranslate {
+    @objc private func sourceStackViewTapped() {
+        print(#function)
+        delegate?.stackViewTapped(sourceLanguageLabel, .source)
+    }
+    
+    @objc private func targetStackViewTapped() {
+        print(#function)
+        delegate?.stackViewTapped(targetLanguageLabel, .target)
     }
 }

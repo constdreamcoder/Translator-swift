@@ -30,7 +30,12 @@ final class TranslateScrollView: UIScrollView {
         return contentView
     }
 
-    func configureUI(_ superUIView: UIView, _ topSection: UIStackView, _ middleSection: UIView, _ bottomSection: UIView) {
+    func configureUI(
+        _ superUIView: UIView,
+        _ topSection: UIStackView,
+        _ middleSection: UIView,
+        _ bottomSection: UIView
+    ) {
         [
             topSection,
             middleSection,

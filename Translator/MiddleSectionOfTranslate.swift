@@ -157,9 +157,22 @@ final class MiddleSectionOfTranslate: UIView {
     }
 }
 
+// MARK: - User Event Methods
 extension MiddleSectionOfTranslate {
     @objc private func translateButtonTapped() {
         print(#function)
         delegate?.translateButtonTapped(inputTextView.text)
     }
 }
+
+// MARK: - UI Update Methods
+extension MiddleSectionOfTranslate {
+    func updateSourceLangaugeLabel(_ sourceLanguage: String) {
+        DispatchQueue.main.async { [weak self] in
+            guard let weakSelf = self else { return }
+            weakSelf.sourceLangaugeLabel.text = sourceLanguage
+        }
+    }
+}
+
+

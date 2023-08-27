@@ -9,6 +9,7 @@ import UIKit
 
 final class CustomTableViewCell: UITableViewCell {
     static let identifier = "CustomTableViewCell"
+    var customCellData: CustomCellModel?
     
     private lazy var sourceLanguageLabel: UILabel = {
         let label = UILabel()
@@ -153,10 +154,12 @@ final class CustomTableViewCell: UITableViewCell {
             spacer.heightAnchor.constraint(equalToConstant: 6.0),
             
         ])
-        
-        
     }
     
-    
-    
+    func setupHistoryData() {
+        sourceLanguageLabel.text = customCellData?.sourceLanguage?.language
+        inputTextLabel.text = customCellData?.inputText
+        targetLanguageLabel.text = customCellData?.targetLanguage?.language
+        translatedTextLabel.text = customCellData?.translateText
+    }
 }

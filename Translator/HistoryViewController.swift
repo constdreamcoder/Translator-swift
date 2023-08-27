@@ -9,6 +9,8 @@ import UIKit
 
 final class HistoryViewController: UIViewController {
     
+    private var historyList: [CustomCellModel] = []
+    
     private lazy var tableView: UITableView = {
         let tableView = UITableView()
         tableView.dataSource = self
@@ -34,8 +36,17 @@ final class HistoryViewController: UIViewController {
         setupViews()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        self.historyList = UserDefaults.standard.historyList
+    }
+    
     @objc func clearAllHistoryRecords() {
-        print(#function)        
+        print("클리어 눌림!!")
+        UserDefaults.standard.historyList = []
+        self.historyList = UserDefaults.standard.historyList
+        tableView.reloadData()
     }
 }
 
@@ -56,7 +67,7 @@ private extension HistoryViewController {
 
 extension HistoryViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 10
+        return historyList.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -64,6 +75,8 @@ extension HistoryViewController: UITableViewDataSource {
             return UITableViewCell()
         }
         cell.configureUI()
+        cell.customCellData = historyList[indexPath.row]
+        cell.setupHistoryData()
         return cell
     }
     

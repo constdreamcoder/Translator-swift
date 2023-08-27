@@ -8,12 +8,13 @@
 import UIKit
 
 final class BottomSectionOfTranslate: UIView {
-
+    
     private lazy var targetLangaugeLabel: UILabel = {
         let label = UILabel()
         label.text = "영어"
         label.font = .systemFont(ofSize: 16.0, weight: .semibold)
         label.textColor = UIColor(red: 0, green: 0.2, blue: 0.4, alpha: 1)
+        label.tag = 1
         return label
     }()
     
@@ -39,11 +40,10 @@ final class BottomSectionOfTranslate: UIView {
         return stackView
     }()
     
-   private lazy var resultLabel: UILabel = {
+    private lazy var resultLabel: UILabel = {
         let label = UILabel()
         label.font = .systemFont(ofSize: 20.0, weight: .semibold)
-//        label.text = "¿Hola como estas?"
-        label.text = "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's"
+        label.text = "¿Hola como estas?"
         label.textColor = UIColor(red: 0.19, green: 0.64, blue: 1, alpha: 1)
         label.numberOfLines = 0
         return label
@@ -167,11 +167,13 @@ final class BottomSectionOfTranslate: UIView {
     
 }
 
+// MARK: - UI Update Methods
 extension BottomSectionOfTranslate {
+    func updateTargetLangaugeLabel(_ targetLanguage: String) {
+        targetLangaugeLabel.text = targetLanguage
+    }
+    
     func updateResultLabel(_ translatedText: String?) {
-        DispatchQueue.main.async { [weak self] in
-            guard let weakSelf = self else { return }
-            weakSelf.resultLabel.text = translatedText
-        }
+        resultLabel.text = translatedText
     }
 }

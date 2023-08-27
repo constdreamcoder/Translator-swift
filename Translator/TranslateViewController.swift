@@ -9,6 +9,8 @@ import UIKit
 
 final class TranslateViewController: UIViewController {
     
+    private var translateManager = TranslatorManager()
+    
     // MARK: - Top Section
     private let topSection = TopSectionOfTranslate()
     
@@ -32,9 +34,14 @@ final class TranslateViewController: UIViewController {
         )
         
         setupViews()
+        topSection.delegate = self
         middleSection.delegate = self
-//        setupUserEventsBehaviors()
+        
+        UserDefaults.standard.set(
+            nil, forKey: UserDefaults.Key.historyList.rawValue
+        )
     }
+    
     
     @objc func moveToHistory() {
         print("히스토리 화면으로 이동!!")
@@ -59,19 +66,73 @@ private extension TranslateViewController {
         
         // MARK: - Configure The Contraints of Bottom Section of Translate UI
         bottomSection.configureUI(scrollView.getContentView(), middleSection)
+        bottomSection.isHidden = true
     }
 }
 
 // MARK: - Set up User Events' Behavior
+extension TranslateViewController: TopSectionOfTranslateDelegate {
+    func stackViewTapped(_ languageLabel: UILabel, _ type: Type) {
+        
+        let actionSheet = UIAlertController(title: "언어를 골라주세요.", message: nil, preferredStyle: .actionSheet)
+        
+        Language.allCases.forEach { value in
+            actionSheet.addAction(
+                UIAlertAction(
+                    title: value.language,
+                    style: .default,
+                    handler: { [weak self] _ in
+                        guard let weakSelf = self else { return }
+                        print("\(value.language)가 선택되었습니다.")
+                       
+                        DispatchQueue.main.async {
+                            languageLabel.text = value.language
+                            switch type {
+                            case .source:
+                                weakSelf.middleSection.updateSourceLangaugeLabel(value.language)
+                                DispatchQueue.global().async {
+                                    weakSelf.translateManager.sourceLanguage = value
+                                }
+                            case .target:
+                                weakSelf.bottomSection.updateTargetLangaugeLabel(value.language)
+                                DispatchQueue.global().async {
+                                    weakSelf.translateManager.targetLanguage = value
+                                }
+                            }
+                        }
+                    }
+                )
+            )
+        }
+        
+        present(actionSheet, animated: true)
+    }
+    
+    
+}
 extension TranslateViewController: MiddleSectionOfTranslateDelegate {
     func translateButtonTapped(_ inputText: String) {
-        TranslatedTextManager().translate(inputText: inputText) { [weak self] result in
+        translateManager.translate(inputText) { [weak self] result in
             guard let weakSelf = self else { return }
             switch result {
-                case .success(let response):
+            case .success(let response):
+                DispatchQueue.main.async {
                     weakSelf.bottomSection.updateResultLabel(response.translatedText)
-                case .failure(let error):
-                    print(error.localizedDescription)
+                    weakSelf.bottomSection.isHidden = false
+                }
+                
+                let newHistoryModel = CustomCellModel(
+                    sourceLanguage: weakSelf.translateManager.sourceLanguage,
+                    targetLanguage: weakSelf.translateManager.targetLanguage,
+                    inputText: inputText,
+                    translateText: response.translatedText,
+                    isFavourite: false
+                )
+                
+                UserDefaults.standard.historyList = [newHistoryModel] + UserDefaults.standard.historyList
+                dump(UserDefaults.standard.historyList)
+            case .failure(let error):
+                print(error.localizedDescription)
             }
         }
         
