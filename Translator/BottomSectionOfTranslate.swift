@@ -7,11 +7,17 @@
 
 import UIKit
 
+protocol BottomSectionOfTranslateDelegate: AnyObject {
+    func favouriteButtonTapped(_ favouriteButton: UIButton)
+}
+
 final class BottomSectionOfTranslate: UIView {
+    
+    weak var delegate: BottomSectionOfTranslateDelegate?
     
     private lazy var targetLangaugeLabel: UILabel = {
         let label = UILabel()
-        label.text = "영어"
+        label.text = TranslateManager().targetLanguage.language
         label.font = .systemFont(ofSize: 16.0, weight: .semibold)
         label.textColor = UIColor(red: 0, green: 0.2, blue: 0.4, alpha: 1)
         label.tag = 1
@@ -167,6 +173,7 @@ final class BottomSectionOfTranslate: UIView {
     
 }
 
+
 // MARK: - UI Update Methods
 extension BottomSectionOfTranslate {
     func updateTargetLangaugeLabel(_ targetLanguage: String) {
@@ -175,5 +182,35 @@ extension BottomSectionOfTranslate {
     
     func updateResultLabel(_ translatedText: String?) {
         resultLabel.text = translatedText
+    }
+    
+    func updateFavouriteButton(_ isFavourite: Bool = false) {
+        let imageConfiguration = UIImage.SymbolConfiguration(pointSize: 26, weight: .medium, scale: .large)
+        if isFavourite {
+            favouriteButton.setImage(UIImage(systemName: "star.fill", withConfiguration: imageConfiguration), for: .normal)
+        } else {
+            favouriteButton.setImage(UIImage(systemName: "star", withConfiguration: imageConfiguration), for: .normal)
+        }
+       
+    }
+}
+
+// MARK: - User Event Methods
+private extension BottomSectionOfTranslate {
+    @objc func playPronumciationSound() {
+        print(#function)
+    }
+    
+    @objc func copyButtonTapped() {
+        print(#function)
+    }
+    
+    @objc func shareButtonTapped() {
+        print(#function)
+    }
+    
+    @objc func favouriteButtonTapped() {
+        print(#function)
+        delegate?.favouriteButtonTapped(favouriteButton)
     }
 }

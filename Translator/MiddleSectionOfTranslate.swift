@@ -17,7 +17,7 @@ final class MiddleSectionOfTranslate: UIView {
     
     private lazy var sourceLangaugeLabel: UILabel = {
         let label = UILabel()
-        label.text = "한국어"
+        label.text = TranslateManager().sourceLanguage.language
         label.font = .systemFont(ofSize: 16.0, weight: .semibold)
         label.textColor = UIColor(red: 0, green: 0.2, blue: 0.4, alpha: 1)
         return label
@@ -157,14 +157,6 @@ final class MiddleSectionOfTranslate: UIView {
     }
 }
 
-// MARK: - User Event Methods
-extension MiddleSectionOfTranslate {
-    @objc private func translateButtonTapped() {
-        print(#function)
-        delegate?.translateButtonTapped(inputTextView.text)
-    }
-}
-
 // MARK: - UI Update Methods
 extension MiddleSectionOfTranslate {
     func updateSourceLangaugeLabel(_ sourceLanguage: String) {
@@ -175,4 +167,10 @@ extension MiddleSectionOfTranslate {
     }
 }
 
-
+// MARK: - User Event Methods
+private extension MiddleSectionOfTranslate {
+    @objc func translateButtonTapped() {
+        print(#function)
+        delegate?.translateButtonTapped(inputTextView.text)
+    }
+}

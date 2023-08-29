@@ -10,8 +10,9 @@
 		00377CBE2A94AE59008442FD /* MiddleSectionOfTranslate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00377CBD2A94AE59008442FD /* MiddleSectionOfTranslate.swift */; };
 		00377CC02A94CB39008442FD /* BottomSectionOfTranslate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00377CBF2A94CB39008442FD /* BottomSectionOfTranslate.swift */; };
 		00377CC22A94D98A008442FD /* TranslateScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00377CC12A94D98A008442FD /* TranslateScrollView.swift */; };
-		0039F32B2A9B3AB90035ECAB /* TranslatorManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0039F32A2A9B3AB90035ECAB /* TranslatorManager.swift */; };
+		0039F32B2A9B3AB90035ECAB /* TranslateManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0039F32A2A9B3AB90035ECAB /* TranslateManager.swift */; };
 		0039F32E2A9B3FD10035ECAB /* UserDefaults+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0039F32D2A9B3FD10035ECAB /* UserDefaults+.swift */; };
+		0053B7F82A9CEA62000670E8 /* NotificationName+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0053B7F72A9CEA62000670E8 /* NotificationName+.swift */; };
 		006C55262A8F4C38009E24BA /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 006C55252A8F4C38009E24BA /* AppDelegate.swift */; };
 		006C55282A8F4C38009E24BA /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 006C55272A8F4C38009E24BA /* SceneDelegate.swift */; };
 		006C552A2A8F4C38009E24BA /* TranslateViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 006C55292A8F4C38009E24BA /* TranslateViewController.swift */; };
@@ -33,8 +34,9 @@
 		00377CBD2A94AE59008442FD /* MiddleSectionOfTranslate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MiddleSectionOfTranslate.swift; sourceTree = "<group>"; };
 		00377CBF2A94CB39008442FD /* BottomSectionOfTranslate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomSectionOfTranslate.swift; sourceTree = "<group>"; };
 		00377CC12A94D98A008442FD /* TranslateScrollView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TranslateScrollView.swift; sourceTree = "<group>"; };
-		0039F32A2A9B3AB90035ECAB /* TranslatorManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TranslatorManager.swift; sourceTree = "<group>"; };
+		0039F32A2A9B3AB90035ECAB /* TranslateManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TranslateManager.swift; sourceTree = "<group>"; };
 		0039F32D2A9B3FD10035ECAB /* UserDefaults+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UserDefaults+.swift"; sourceTree = "<group>"; };
+		0053B7F72A9CEA62000670E8 /* NotificationName+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NotificationName+.swift"; sourceTree = "<group>"; };
 		006C55222A8F4C38009E24BA /* Translator.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Translator.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		006C55252A8F4C38009E24BA /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		006C55272A8F4C38009E24BA /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -69,7 +71,7 @@
 			isa = PBXGroup;
 			children = (
 				00E4FD802A989CFD008BDDE8 /* APIManager.swift */,
-				0039F32A2A9B3AB90035ECAB /* TranslatorManager.swift */,
+				0039F32A2A9B3AB90035ECAB /* TranslateManager.swift */,
 			);
 			name = Managers;
 			sourceTree = "<group>";
@@ -78,6 +80,7 @@
 			isa = PBXGroup;
 			children = (
 				0039F32D2A9B3FD10035ECAB /* UserDefaults+.swift */,
+				0053B7F72A9CEA62000670E8 /* NotificationName+.swift */,
 			);
 			name = Extensions;
 			sourceTree = "<group>";
@@ -229,7 +232,7 @@
 			files = (
 				00377CBE2A94AE59008442FD /* MiddleSectionOfTranslate.swift in Sources */,
 				00E4FD812A989CFD008BDDE8 /* APIManager.swift in Sources */,
-				0039F32B2A9B3AB90035ECAB /* TranslatorManager.swift in Sources */,
+				0039F32B2A9B3AB90035ECAB /* TranslateManager.swift in Sources */,
 				00E5932E2A99EDEB008D3DB1 /* CustomCellModel.swift in Sources */,
 				00377CC02A94CB39008442FD /* BottomSectionOfTranslate.swift in Sources */,
 				009098172A97527300D1745B /* CustomTableViewCell.swift in Sources */,
@@ -239,6 +242,7 @@
 				006C552A2A8F4C38009E24BA /* TranslateViewController.swift in Sources */,
 				00377CC22A94D98A008442FD /* TranslateScrollView.swift in Sources */,
 				006C55262A8F4C38009E24BA /* AppDelegate.swift in Sources */,
+				0053B7F82A9CEA62000670E8 /* NotificationName+.swift in Sources */,
 				006C553E2A8F5C14009E24BA /* HistoryViewController.swift in Sources */,
 				00E8D9282A939EB7004F24CE /* TopSectionOfTranslate.swift in Sources */,
 				0039F32E2A9B3FD10035ECAB /* UserDefaults+.swift in Sources */,

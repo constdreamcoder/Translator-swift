@@ -9,7 +9,7 @@ import UIKit
 
 final class TranslateViewController: UIViewController {
     
-    private var translateManager = TranslatorManager()
+    private var translateManager = TranslateManager()
     
     // MARK: - Top Section
     private let topSection = TopSectionOfTranslate()
@@ -36,10 +36,19 @@ final class TranslateViewController: UIViewController {
         setupViews()
         topSection.delegate = self
         middleSection.delegate = self
+        bottomSection.delegate = self
         
+        NotificationCenter.default.addObserver(self, selector: #selector(changeFavouriteStarImage), name: .changeFavouriteStarImage, object: nil)
+        
+        // 임시
         UserDefaults.standard.set(
             nil, forKey: UserDefaults.Key.historyList.rawValue
         )
+        
+        UserDefaults.standard.set(
+            nil, forKey: UserDefaults.Key.favouriteList.rawValue
+        )
+        
     }
     
     
@@ -47,6 +56,16 @@ final class TranslateViewController: UIViewController {
         print("히스토리 화면으로 이동!!")
         let historyVC = HistoryViewController()
         navigationController?.pushViewController(historyVC, animated: true)
+    }
+    
+    @objc func changeFavouriteStarImage(_ notification: Notification) {
+        if let isFavourite = notification.object as? Bool {
+            bottomSection.updateFavouriteButton(isFavourite)
+        }
+    }
+    
+    deinit {
+        NotificationCenter.default.removeObserver(self)
     }
 }
 
@@ -66,6 +85,7 @@ private extension TranslateViewController {
         
         // MARK: - Configure The Contraints of Bottom Section of Translate UI
         bottomSection.configureUI(scrollView.getContentView(), middleSection)
+        
         bottomSection.isHidden = true
     }
 }
@@ -84,7 +104,7 @@ extension TranslateViewController: TopSectionOfTranslateDelegate {
                     handler: { [weak self] _ in
                         guard let weakSelf = self else { return }
                         print("\(value.language)가 선택되었습니다.")
-                       
+                        
                         DispatchQueue.main.async {
                             languageLabel.text = value.language
                             switch type {
@@ -107,8 +127,6 @@ extension TranslateViewController: TopSectionOfTranslateDelegate {
         
         present(actionSheet, animated: true)
     }
-    
-    
 }
 extension TranslateViewController: MiddleSectionOfTranslateDelegate {
     func translateButtonTapped(_ inputText: String) {
@@ -118,6 +136,7 @@ extension TranslateViewController: MiddleSectionOfTranslateDelegate {
             case .success(let response):
                 DispatchQueue.main.async {
                     weakSelf.bottomSection.updateResultLabel(response.translatedText)
+                    weakSelf.bottomSection.updateFavouriteButton()
                     weakSelf.bottomSection.isHidden = false
                 }
                 
@@ -136,6 +155,49 @@ extension TranslateViewController: MiddleSectionOfTranslateDelegate {
             }
         }
         
+    }
+}
+
+extension TranslateViewController: BottomSectionOfTranslateDelegate {
+    func favouriteButtonTapped(_ favouriteButton: UIButton) {
+        
+        let imageConfiguration = UIImage.SymbolConfiguration(pointSize: 26, weight: .medium, scale: .large)
+        
+        if favouriteButton.imageView?.image == UIImage(systemName: "star", withConfiguration: imageConfiguration) {
+            
+            if var firstOfHistoryList = UserDefaults.standard.historyList.first {
+                firstOfHistoryList.isFavourite = true
+                UserDefaults.standard.historyList[0] = firstOfHistoryList
+                
+                UserDefaults.standard.favouriteList = [firstOfHistoryList] + UserDefaults.standard.favouriteList
+            } else {
+                let newFavourite = CustomCellModel(
+                    sourceLanguage: translateManager.sourceLanguage,
+                    targetLanguage: translateManager.targetLanguage,
+                    inputText: TranslateManager.inputText,
+                    translateText: TranslateManager.translatedText,
+                    isFavourite: true
+                )
+                
+                UserDefaults.standard.favouriteList = [newFavourite] + UserDefaults.standard.favouriteList
+            }
+           
+            DispatchQueue.main.async {
+                favouriteButton.setImage(UIImage(systemName: "star.fill", withConfiguration: imageConfiguration), for: .normal)
+            }
+        } else {
+            
+            if var firstOfHistoryList = UserDefaults.standard.historyList.first  {
+                firstOfHistoryList.isFavourite = false
+                UserDefaults.standard.historyList[0] = firstOfHistoryList
+            }
+            
+            UserDefaults.standard.favouriteList.removeFirst()
+            
+            DispatchQueue.main.async {
+                favouriteButton.setImage(UIImage(systemName: "star", withConfiguration: imageConfiguration), for: .normal)
+            }
+        }
     }
 }
 
@@ -161,21 +223,4 @@ extension MiddleSectionOfTranslate {
     
 }
 
-extension BottomSectionOfTranslate {
-    @objc func playPronumciationSound() {
-        print(#function)
-    }
-    
-    @objc func copyButtonTapped() {
-        print(#function)
-    }
-    
-    @objc func shareButtonTapped() {
-        print(#function)
-    }
-    
-    @objc func favouriteButtonTapped() {
-        print(#function)
-    }
-}
 

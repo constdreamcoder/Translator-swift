@@ -7,9 +7,15 @@
 
 import UIKit
 
+protocol CustomTableViewCellDelegate: AnyObject {
+    func favouriteButtonTapped(_ customCellData: CustomCellModel?, _ favouriteStarImageView: UIImageView)
+}
+
 final class CustomTableViewCell: UITableViewCell {
     static let identifier = "CustomTableViewCell"
     var customCellData: CustomCellModel?
+    
+    var delegate: CustomTableViewCellDelegate?
     
     private lazy var sourceLanguageLabel: UILabel = {
         let label = UILabel()
@@ -38,10 +44,6 @@ final class CustomTableViewCell: UITableViewCell {
         return imageView
     }()
     
-    @objc func favouriteButtonTapped() {
-        print(#function)
-    }
-    
     private lazy var divider: UIView = {
         let view = UIView()
         view.backgroundColor = .black.withAlphaComponent(0.2)
@@ -50,15 +52,14 @@ final class CustomTableViewCell: UITableViewCell {
     
     private lazy var targetLanguageLabel: UILabel = {
         let label = UILabel()
-        label.text = "영어"
+        label.text = ""
         label.font = .systemFont(ofSize: 16.0, weight: .semibold)
         return label
     }()
     
     private lazy var translatedTextLabel: UILabel = {
         let label = UILabel()
-//        label.text = "Hello, how are you?"
-        label.text = "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's"
+        label.text = ""
         label.font = .systemFont(ofSize: 14.0)
         label.textColor = UIColor(red: 1, green: 0.4, blue: 0, alpha: 1)
         label.numberOfLines = 0
@@ -156,10 +157,24 @@ final class CustomTableViewCell: UITableViewCell {
         ])
     }
     
-    func setupHistoryData() {
+    func setupCustomCellData() {
         sourceLanguageLabel.text = customCellData?.sourceLanguage?.language
         inputTextLabel.text = customCellData?.inputText
         targetLanguageLabel.text = customCellData?.targetLanguage?.language
         translatedTextLabel.text = customCellData?.translateText
+        
+        let imageConfiguration = UIImage.SymbolConfiguration(pointSize: 24, weight: .medium, scale: .large)
+        guard let isFavourite = customCellData?.isFavourite else { return }
+        favouriteStarImageView.image = isFavourite
+        ? UIImage(systemName: "star.fill",withConfiguration: imageConfiguration)
+        : UIImage(systemName: "star",withConfiguration: imageConfiguration)
+    }
+}
+
+// MARK: - User Event Methods
+private extension CustomTableViewCell {
+    @objc func favouriteButtonTapped() {
+        print(#function)
+        delegate?.favouriteButtonTapped(customCellData, favouriteStarImageView)
     }
 }

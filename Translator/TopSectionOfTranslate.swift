@@ -130,13 +130,13 @@ final class TopSectionOfTranslate: UIStackView {
     }
 }
 
-extension TopSectionOfTranslate {
-    @objc private func sourceStackViewTapped() {
+private extension TopSectionOfTranslate {
+    @objc func sourceStackViewTapped() {
         print(#function)
         delegate?.stackViewTapped(sourceLanguageLabel, .source)
     }
     
-    @objc private func targetStackViewTapped() {
+    @objc func targetStackViewTapped() {
         print(#function)
         delegate?.stackViewTapped(targetLanguageLabel, .target)
     }

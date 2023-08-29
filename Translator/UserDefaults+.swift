@@ -29,4 +29,20 @@ extension UserDefaults {
         }
     }
     
+    var favouriteList: [CustomCellModel] {
+        get {
+            guard let data = UserDefaults.standard.data(forKey: UserDefaults.Key.favouriteList.rawValue),
+                  let favouriteList = try? PropertyListDecoder().decode([CustomCellModel].self, from: data) else {
+                return []
+            }
+            return favouriteList
+        }
+        set {
+            UserDefaults.standard.set(
+                try? PropertyListEncoder().encode(newValue),
+                forKey: UserDefaults.Key.favouriteList.rawValue
+            )
+        }
+    }
+    
 }

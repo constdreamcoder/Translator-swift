@@ -40,6 +40,7 @@ final class HistoryViewController: UIViewController {
         super.viewWillAppear(animated)
         
         self.historyList = UserDefaults.standard.historyList
+        tableView.reloadData()
     }
     
     @objc func clearAllHistoryRecords() {
@@ -75,8 +76,11 @@ extension HistoryViewController: UITableViewDataSource {
             return UITableViewCell()
         }
         cell.configureUI()
+        
+        cell.delegate = self
+        
         cell.customCellData = historyList[indexPath.row]
-        cell.setupHistoryData()
+        cell.setupCustomCellData()
         return cell
     }
     
@@ -85,4 +89,48 @@ extension HistoryViewController: UITableViewDataSource {
 
 extension HistoryViewController: UITableViewDelegate {
     
+}
+
+extension HistoryViewController: CustomTableViewCellDelegate {
+    func favouriteButtonTapped(_ customCellData: CustomCellModel?, _ favouriteStarImageView: UIImageView) {
+        guard let customCellData = customCellData,
+              let isFavourite = customCellData.isFavourite
+        else { return }
+        
+        let imageConfiguration = UIImage.SymbolConfiguration(pointSize: 24, weight: .medium, scale: .large)
+        
+        if !isFavourite {
+            let historyIndex = UserDefaults.standard.historyList.firstIndex { $0.uuid == customCellData.uuid }
+            guard let historyIndex = historyIndex else { return }
+            UserDefaults.standard.historyList[historyIndex].isFavourite = true
+            
+            DispatchQueue.main.async {
+                favouriteStarImageView.image = UIImage(systemName: "star.fill",withConfiguration: imageConfiguration)
+            }
+            
+            UserDefaults.standard.favouriteList = [UserDefaults.standard.historyList[historyIndex]] + UserDefaults.standard.favouriteList
+            
+            if historyIndex == 0 {
+                NotificationCenter.default.post(name: .changeFavouriteStarImage, object: true)
+            }
+            
+        } else {
+            
+            let historyIndex = UserDefaults.standard.historyList.firstIndex { $0.uuid == customCellData.uuid }
+            guard let historyIndex = historyIndex else { return }
+            UserDefaults.standard.historyList[historyIndex].isFavourite = false
+            
+            DispatchQueue.main.async {
+                favouriteStarImageView.image = UIImage(systemName: "star",withConfiguration: imageConfiguration)
+            }
+            
+            UserDefaults.standard.favouriteList.removeAll { $0.uuid == customCellData.uuid }
+            
+            if historyIndex == 0 {
+                NotificationCenter.default.post(name: .changeFavouriteStarImage, object: false)
+            }
+        }
+        
+        
+    }
 }
