@@ -18,7 +18,7 @@ final class MiddleSectionOfTranslate: UIView {
     
     private lazy var sourceLangaugeLabel: UILabel = {
         let label = UILabel()
-        label.text = TranslateManager().sourceLanguage.language
+        label.text = "한국"
         label.font = .systemFont(ofSize: 16.0, weight: .semibold)
         label.textColor = UIColor(red: 0, green: 0.2, blue: 0.4, alpha: 1)
         return label
@@ -208,6 +208,10 @@ private extension MiddleSectionOfTranslate {
     
     @objc func translateButtonTapped() {
         print(#function)
-        delegate?.translateButtonTapped(inputTextView.text)
+        if !inputTextView.text.isEmpty
+            && inputTextView.textColor != nil
+            && inputTextView.textColor != UIColor.lightGray {
+            delegate?.translateButtonTapped(inputTextView.text)
+        }
     }
 }

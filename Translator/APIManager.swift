@@ -8,6 +8,7 @@
 import UIKit
 
 enum NetworkError: Error {
+    case inputTextEmpty
     case invalidURL
     case invalidRequest
     case requestFailed(Error)

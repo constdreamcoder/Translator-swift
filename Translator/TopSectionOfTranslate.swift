@@ -8,7 +8,18 @@
 import UIKit
 
 protocol TopSectionOfTranslateDelegate: AnyObject {
-    func stackViewTapped(_ languageLabel: UILabel, _ type: Type)
+    func stackViewTapped(
+        _ nationalFlagImageView: UIImageView,
+        _ languageLabel: UILabel,
+        _ type: Type
+    )
+    
+    func swapButtonTapped(
+        _ sourceLanguageNationalFlagImageView: UIImageView,
+        _ sourceLanguageLabel: UILabel,
+        _ targetLanguageNationalFlagImageView: UIImageView,
+        _ targetLanguageLabel: UILabel
+    )
 }
 
 final class TopSectionOfTranslate: UIStackView {
@@ -18,7 +29,7 @@ final class TopSectionOfTranslate: UIStackView {
     // source language
     private lazy var sourceLanguageNationalFlagImageView: UIImageView = {
         let imageView = UIImageView()
-        imageView.image = UIImage(named: "southKorea")
+        imageView.image = UIImage(named: "southKoreaFlag")
         return imageView
     }()
     
@@ -56,7 +67,7 @@ final class TopSectionOfTranslate: UIStackView {
     // target language
     private lazy var targetLanguageNationalFlagImageView: UIImageView = {
         let imageView = UIImageView()
-        imageView.image = UIImage(named: "unitedStates")
+        imageView.image = UIImage(named: "unitedStatesFlag")
         return imageView
     }()
     
@@ -133,11 +144,29 @@ final class TopSectionOfTranslate: UIStackView {
 private extension TopSectionOfTranslate {
     @objc func sourceStackViewTapped() {
         print(#function)
-        delegate?.stackViewTapped(sourceLanguageLabel, .source)
+        delegate?.stackViewTapped(
+            sourceLanguageNationalFlagImageView,
+            sourceLanguageLabel,
+                .source
+        )
+    }
+    
+    @objc func swapButtonTapped() {
+        print(#function)
+        delegate?.swapButtonTapped(
+            sourceLanguageNationalFlagImageView,
+            sourceLanguageLabel,
+            targetLanguageNationalFlagImageView,
+            targetLanguageLabel
+        )
     }
     
     @objc func targetStackViewTapped() {
         print(#function)
-        delegate?.stackViewTapped(targetLanguageLabel, .target)
+        delegate?.stackViewTapped(
+            targetLanguageNationalFlagImageView,
+            targetLanguageLabel,
+                .target
+        )
     }
 }

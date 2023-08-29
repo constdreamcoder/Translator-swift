@@ -92,8 +92,24 @@ private extension TranslateViewController {
 
 // MARK: - Set up User Events' Behavior
 extension TranslateViewController: TopSectionOfTranslateDelegate {
-    func stackViewTapped(_ languageLabel: UILabel, _ type: Type) {
+    func swapButtonTapped(
+        _ sourceLanguageNationalFlagImageView: UIImageView,
+        _ sourceLanguageLabel: UILabel,
+        _ targetLanguageNationalFlagImageView: UIImageView,
+        _ targetLanguageLabel: UILabel
+    ) {
+        swap(&sourceLanguageNationalFlagImageView.image, &targetLanguageNationalFlagImageView.image)
+        swap(&sourceLanguageLabel.text, &targetLanguageLabel.text)
         
+        middleSection.updateSourceLangaugeLabel(sourceLanguageLabel.text!)
+        bottomSection.updateTargetLangaugeLabel(targetLanguageLabel.text!)
+    }
+    
+    func stackViewTapped(
+        _ nationalFlagImageView: UIImageView,
+        _ languageLabel: UILabel,
+        _ type: Type
+    ) {
         let actionSheet = UIAlertController(title: "언어를 골라주세요.", message: nil, preferredStyle: .actionSheet)
         
         Language.allCases.forEach { value in
@@ -107,16 +123,17 @@ extension TranslateViewController: TopSectionOfTranslateDelegate {
                         
                         DispatchQueue.main.async {
                             languageLabel.text = value.language
+                            nationalFlagImageView.image = UIImage(named: value.nationalFlag)
                             switch type {
                             case .source:
                                 weakSelf.middleSection.updateSourceLangaugeLabel(value.language)
                                 DispatchQueue.global().async {
-                                    weakSelf.translateManager.sourceLanguage = value
+                                    TranslateManager.sourceLanguage = value
                                 }
                             case .target:
                                 weakSelf.bottomSection.updateTargetLangaugeLabel(value.language)
                                 DispatchQueue.global().async {
-                                    weakSelf.translateManager.targetLanguage = value
+                                    TranslateManager.targetLanguage = value
                                 }
                             }
                         }
@@ -134,6 +151,7 @@ extension TranslateViewController: MiddleSectionOfTranslateDelegate {
     }
     
     func translateButtonTapped(_ inputText: String) {
+        
         translateManager.translate(inputText) { [weak self] result in
             guard let weakSelf = self else { return }
             switch result {
@@ -145,8 +163,8 @@ extension TranslateViewController: MiddleSectionOfTranslateDelegate {
                 }
                 
                 let newHistoryModel = CustomCellModel(
-                    sourceLanguage: weakSelf.translateManager.sourceLanguage,
-                    targetLanguage: weakSelf.translateManager.targetLanguage,
+                    sourceLanguage: TranslateManager.sourceLanguage,
+                    targetLanguage: TranslateManager.targetLanguage,
                     inputText: inputText,
                     translateText: response.translatedText,
                     isFavourite: false
@@ -176,8 +194,8 @@ extension TranslateViewController: BottomSectionOfTranslateDelegate {
                 UserDefaults.standard.favouriteList = [firstOfHistoryList] + UserDefaults.standard.favouriteList
             } else {
                 let newFavourite = CustomCellModel(
-                    sourceLanguage: translateManager.sourceLanguage,
-                    targetLanguage: translateManager.targetLanguage,
+                    sourceLanguage: TranslateManager.sourceLanguage,
+                    targetLanguage: TranslateManager.targetLanguage,
                     inputText: TranslateManager.inputText,
                     translateText: TranslateManager.translatedText,
                     isFavourite: true
@@ -202,12 +220,6 @@ extension TranslateViewController: BottomSectionOfTranslateDelegate {
                 favouriteButton.setImage(UIImage(systemName: "star", withConfiguration: imageConfiguration), for: .normal)
             }
         }
-    }
-}
-
-extension TopSectionOfTranslate {
-    @objc func swapButtonTapped() {
-        print(#function)
     }
 }
 

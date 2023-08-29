@@ -10,31 +10,15 @@ import Foundation
 struct TranslateManager {
     static var inputText: String = ""
     static var translatedText: String = ""
-    
-    private var _sourceLanguage: Language = .ko
-    private var _targetLanguage: Language = .en
-    
-    var sourceLanguage: Language {
-        get {
-            return _sourceLanguage
-        }
-        set {
-            _sourceLanguage = newValue
-        }
-    }
-    
-    var targetLanguage: Language {
-        get {
-            return _targetLanguage
-        }
-        set {
-            _targetLanguage = newValue
-        }
-    }
+    static var sourceLanguage: Language = .ko
+    static var targetLanguage: Language = .en
 }
 
 extension TranslateManager {
-    func translate(_ inputText: String = "", completion: @escaping (Result<TranslatedText, NetworkError>) -> Void) {
+    func translate(
+        _ inputText: String = "",
+        completion: @escaping (Result<TranslatedText, NetworkError>) -> Void
+    ) {
         
         guard let request = APIManager().setupURLRequest(
             endPoint: "/translate",
@@ -42,8 +26,8 @@ extension TranslateManager {
             headers: [
                 "Content-Type": "application/json"
             ], payload: [
-                "source": sourceLanguage.languageCode,
-                "target": targetLanguage.languageCode,
+                "source": TranslateManager.sourceLanguage.languageCode,
+                "target": TranslateManager.targetLanguage.languageCode,
                 "text": inputText
             ]) else {
             completion(.failure(.invalidRequest))
