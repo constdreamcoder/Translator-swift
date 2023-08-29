@@ -129,6 +129,10 @@ extension TranslateViewController: TopSectionOfTranslateDelegate {
     }
 }
 extension TranslateViewController: MiddleSectionOfTranslateDelegate {
+    func clearInputButtonTapped(_ inputTextView: UITextView) {
+        inputTextView.text = ""
+    }
+    
     func translateButtonTapped(_ inputText: String) {
         translateManager.translate(inputText) { [weak self] result in
             guard let weakSelf = self else { return }
@@ -212,9 +216,7 @@ extension MiddleSectionOfTranslate {
         print(#function)
     }
     
-    @objc func clearInputBUttonTapped() {
-        print(#function)
-    }
+    
     
     @objc func voiceInputButtonTapped() {
         print(#function)

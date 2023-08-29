@@ -8,6 +8,7 @@
 import UIKit
 
 protocol MiddleSectionOfTranslateDelegate: AnyObject {
+    func clearInputButtonTapped(_ inputTextView: UITextView)
     func translateButtonTapped(_ inputText: String)
 }
 
@@ -51,14 +52,17 @@ final class MiddleSectionOfTranslate: UIView {
         button.setImage(UIImage(systemName: "xmark"), for: .normal)
         button.backgroundColor = UIColor(red: 0.96, green: 0.96, blue: 0.96, alpha: 1)
         button.layer.cornerRadius = 0.5 * 39.0
-        button.addTarget(self, action: #selector(clearInputBUttonTapped), for: .touchUpInside)
+        button.addTarget(self, action: #selector(clearInputButtonTapped), for: .touchUpInside)
+        button.isHidden = true
         return button
     }()
     
     private lazy var inputTextView: UITextView = {
         let textView = UITextView()
         textView.font = .systemFont(ofSize: 20.0, weight: .semibold)
-        textView.text = "안녕하세요!"
+        textView.text = "번역할 내용을 입력해주세요."
+        textView.textColor = UIColor.lightGray
+        textView.delegate = self
         return textView
     }()
     
@@ -73,7 +77,7 @@ final class MiddleSectionOfTranslate: UIView {
         return button
     }()
     
-   private lazy var translateButton: UIButton = {
+    private lazy var translateButton: UIButton = {
         let button = UIButton()
         button.setTitle("번역하기", for: .normal)
         button.setTitleColor(.white, for: .normal)
@@ -124,7 +128,7 @@ final class MiddleSectionOfTranslate: UIView {
             self.leadingAnchor.constraint(equalTo: superUIView.leadingAnchor, constant: 23.0),
             self.trailingAnchor.constraint(equalTo: superUIView.trailingAnchor, constant: -23.0),
             self.heightAnchor.constraint(equalToConstant: 250.0),
-
+            
             
             sourceLanguagePronunciationPlayButton.widthAnchor.constraint(equalToConstant: 28.0),
             sourceLanguagePronunciationPlayButton.heightAnchor.constraint(equalTo: sourceLanguagePronunciationPlayButton.widthAnchor, multiplier: 1),
@@ -157,6 +161,34 @@ final class MiddleSectionOfTranslate: UIView {
     }
 }
 
+// MARK: - Text Delegate Methods
+extension MiddleSectionOfTranslate: UITextViewDelegate {
+    func textViewDidBeginEditing(_ textView: UITextView) {
+        print(#function)
+        if textView.textColor == UIColor.lightGray {
+            textView.text = nil
+            textView.textColor = UIColor.black
+        }
+    }
+    
+    func textViewDidEndEditing(_ textView: UITextView) {
+        print(#function)
+        if textView.text.isEmpty {
+            textView.text = "번역할 내용을 입력해주세요."
+            textView.textColor = UIColor.lightGray
+        }
+    }
+    
+    func textViewDidChangeSelection(_ textView: UITextView) {
+        print(#function)
+        if textView.text.isEmpty {
+            clearInputButton.isHidden = true
+            return
+        }
+        clearInputButton.isHidden = false
+    }
+}
+
 // MARK: - UI Update Methods
 extension MiddleSectionOfTranslate {
     func updateSourceLangaugeLabel(_ sourceLanguage: String) {
@@ -169,6 +201,11 @@ extension MiddleSectionOfTranslate {
 
 // MARK: - User Event Methods
 private extension MiddleSectionOfTranslate {
+    @objc func clearInputButtonTapped() {
+        print(#function)
+        delegate?.clearInputButtonTapped(inputTextView)
+    }
+    
     @objc func translateButtonTapped() {
         print(#function)
         delegate?.translateButtonTapped(inputTextView.text)

@@ -83,8 +83,6 @@ extension HistoryViewController: UITableViewDataSource {
         cell.setupCustomCellData()
         return cell
     }
-    
-    
 }
 
 extension HistoryViewController: UITableViewDelegate {
