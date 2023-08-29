@@ -103,6 +103,11 @@ extension TranslateViewController: TopSectionOfTranslateDelegate {
         
         middleSection.updateSourceLangaugeLabel(sourceLanguageLabel.text!)
         bottomSection.updateTargetLangaugeLabel(targetLanguageLabel.text!)
+        
+        let sourceLanguage = Language.allCases.filter { $0.language == sourceLanguageLabel.text! }[0]
+        let targetLanguage = Language.allCases.filter { $0.language == targetLanguageLabel.text! }[0]
+        TranslateManager.sourceLanguage = sourceLanguage
+        TranslateManager.targetLanguage = targetLanguage
     }
     
     func stackViewTapped(
@@ -181,6 +186,11 @@ extension TranslateViewController: MiddleSectionOfTranslateDelegate {
 }
 
 extension TranslateViewController: BottomSectionOfTranslateDelegate {
+    func copyButtonTapped(_ resultLabelText: String?) {
+        print("\(resultLabelText)가 복사되었습니다")
+        UIPasteboard.general.string = resultLabelText
+    }
+    
     func favouriteButtonTapped(_ favouriteButton: UIButton) {
         
         let imageConfiguration = UIImage.SymbolConfiguration(pointSize: 26, weight: .medium, scale: .large)

@@ -8,6 +8,7 @@
 import UIKit
 
 protocol BottomSectionOfTranslateDelegate: AnyObject {
+    func copyButtonTapped(_ resultLabelText: String?)
     func favouriteButtonTapped(_ favouriteButton: UIButton)
 }
 
@@ -203,6 +204,7 @@ private extension BottomSectionOfTranslate {
     
     @objc func copyButtonTapped() {
         print(#function)
+        delegate?.copyButtonTapped(resultLabel.text)
     }
     
     @objc func shareButtonTapped() {
