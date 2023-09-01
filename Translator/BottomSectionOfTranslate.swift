@@ -8,7 +8,9 @@
 import UIKit
 
 protocol BottomSectionOfTranslateDelegate: AnyObject {
+    func playPronumciationSound(_ resultLabelText: String?)
     func copyButtonTapped(_ resultLabelText: String?)
+    func shareButtonTapped()
     func favouriteButtonTapped(_ favouriteButton: UIButton)
 }
 
@@ -50,7 +52,7 @@ final class BottomSectionOfTranslate: UIView {
     private lazy var resultLabel: UILabel = {
         let label = UILabel()
         label.font = .systemFont(ofSize: 20.0, weight: .semibold)
-        label.text = "¿Hola como estas?"
+        label.text = ""
         label.textColor = UIColor(red: 0.19, green: 0.64, blue: 1, alpha: 1)
         label.numberOfLines = 0
         return label
@@ -200,6 +202,7 @@ extension BottomSectionOfTranslate {
 private extension BottomSectionOfTranslate {
     @objc func playPronumciationSound() {
         print(#function)
+        delegate?.playPronumciationSound(resultLabel.text)
     }
     
     @objc func copyButtonTapped() {
@@ -209,6 +212,7 @@ private extension BottomSectionOfTranslate {
     
     @objc func shareButtonTapped() {
         print(#function)
+        delegate?.shareButtonTapped()
     }
     
     @objc func favouriteButtonTapped() {

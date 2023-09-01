@@ -17,6 +17,19 @@ enum Language: String, Codable, CaseIterable {
         self.rawValue
     }
     
+    var languageIdentifier: String {
+        switch self {
+        case .ko:
+            return "ko-KR"
+        case .en:
+            return "en-US"
+        case .ja:
+            return "ja-JP"
+        case .zh:
+            return "cmn-CN"
+        }
+    }
+    
     var language: String {
         switch self {
         case .ko:

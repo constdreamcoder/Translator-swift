@@ -10,7 +10,7 @@
 		00377CBE2A94AE59008442FD /* MiddleSectionOfTranslate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00377CBD2A94AE59008442FD /* MiddleSectionOfTranslate.swift */; };
 		00377CC02A94CB39008442FD /* BottomSectionOfTranslate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00377CBF2A94CB39008442FD /* BottomSectionOfTranslate.swift */; };
 		00377CC22A94D98A008442FD /* TranslateScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00377CC12A94D98A008442FD /* TranslateScrollView.swift */; };
-		0039F32B2A9B3AB90035ECAB /* TranslateManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0039F32A2A9B3AB90035ECAB /* TranslateManager.swift */; };
+		0039F32B2A9B3AB90035ECAB /* TranslationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0039F32A2A9B3AB90035ECAB /* TranslationManager.swift */; };
 		0039F32E2A9B3FD10035ECAB /* UserDefaults+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0039F32D2A9B3FD10035ECAB /* UserDefaults+.swift */; };
 		0053B7F82A9CEA62000670E8 /* NotificationName+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0053B7F72A9CEA62000670E8 /* NotificationName+.swift */; };
 		006C55262A8F4C38009E24BA /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 006C55252A8F4C38009E24BA /* AppDelegate.swift */; };
@@ -22,6 +22,7 @@
 		006C553C2A8F53B7009E24BA /* FavouriteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 006C553B2A8F53B7009E24BA /* FavouriteViewController.swift */; };
 		006C553E2A8F5C14009E24BA /* HistoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 006C553D2A8F5C14009E24BA /* HistoryViewController.swift */; };
 		009098172A97527300D1745B /* CustomTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 009098162A97527300D1745B /* CustomTableViewCell.swift */; };
+		00C08B442A9F825300829C3C /* AudioManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00C08B432A9F825300829C3C /* AudioManager.swift */; };
 		00C6E1532A9B180E00182371 /* Language.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00C6E1522A9B180E00182371 /* Language.swift */; };
 		00C6E1552A9B2D9700182371 /* Type.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00C6E1542A9B2D9700182371 /* Type.swift */; };
 		00E4FD812A989CFD008BDDE8 /* APIManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00E4FD802A989CFD008BDDE8 /* APIManager.swift */; };
@@ -34,7 +35,7 @@
 		00377CBD2A94AE59008442FD /* MiddleSectionOfTranslate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MiddleSectionOfTranslate.swift; sourceTree = "<group>"; };
 		00377CBF2A94CB39008442FD /* BottomSectionOfTranslate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomSectionOfTranslate.swift; sourceTree = "<group>"; };
 		00377CC12A94D98A008442FD /* TranslateScrollView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TranslateScrollView.swift; sourceTree = "<group>"; };
-		0039F32A2A9B3AB90035ECAB /* TranslateManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TranslateManager.swift; sourceTree = "<group>"; };
+		0039F32A2A9B3AB90035ECAB /* TranslationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TranslationManager.swift; sourceTree = "<group>"; };
 		0039F32D2A9B3FD10035ECAB /* UserDefaults+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UserDefaults+.swift"; sourceTree = "<group>"; };
 		0053B7F72A9CEA62000670E8 /* NotificationName+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NotificationName+.swift"; sourceTree = "<group>"; };
 		006C55222A8F4C38009E24BA /* Translator.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Translator.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -48,6 +49,7 @@
 		006C553B2A8F53B7009E24BA /* FavouriteViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavouriteViewController.swift; sourceTree = "<group>"; };
 		006C553D2A8F5C14009E24BA /* HistoryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryViewController.swift; sourceTree = "<group>"; };
 		009098162A97527300D1745B /* CustomTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTableViewCell.swift; sourceTree = "<group>"; };
+		00C08B432A9F825300829C3C /* AudioManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioManager.swift; sourceTree = "<group>"; };
 		00C6E1522A9B180E00182371 /* Language.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Language.swift; sourceTree = "<group>"; };
 		00C6E1542A9B2D9700182371 /* Type.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Type.swift; sourceTree = "<group>"; };
 		00E4FD802A989CFD008BDDE8 /* APIManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIManager.swift; sourceTree = "<group>"; };
@@ -71,7 +73,8 @@
 			isa = PBXGroup;
 			children = (
 				00E4FD802A989CFD008BDDE8 /* APIManager.swift */,
-				0039F32A2A9B3AB90035ECAB /* TranslateManager.swift */,
+				0039F32A2A9B3AB90035ECAB /* TranslationManager.swift */,
+				00C08B432A9F825300829C3C /* AudioManager.swift */,
 			);
 			name = Managers;
 			sourceTree = "<group>";
@@ -232,7 +235,7 @@
 			files = (
 				00377CBE2A94AE59008442FD /* MiddleSectionOfTranslate.swift in Sources */,
 				00E4FD812A989CFD008BDDE8 /* APIManager.swift in Sources */,
-				0039F32B2A9B3AB90035ECAB /* TranslateManager.swift in Sources */,
+				0039F32B2A9B3AB90035ECAB /* TranslationManager.swift in Sources */,
 				00E5932E2A99EDEB008D3DB1 /* CustomCellModel.swift in Sources */,
 				00377CC02A94CB39008442FD /* BottomSectionOfTranslate.swift in Sources */,
 				009098172A97527300D1745B /* CustomTableViewCell.swift in Sources */,
@@ -249,6 +252,7 @@
 				00E4FD832A98A94D008BDDE8 /* TranslatedText.swift in Sources */,
 				006C553C2A8F53B7009E24BA /* FavouriteViewController.swift in Sources */,
 				006C55282A8F4C38009E24BA /* SceneDelegate.swift in Sources */,
+				00C08B442A9F825300829C3C /* AudioManager.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

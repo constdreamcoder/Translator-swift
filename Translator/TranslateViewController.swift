@@ -6,10 +6,12 @@
 //
 
 import UIKit
+import AVFoundation
+import Speech
 
 final class TranslateViewController: UIViewController {
     
-    private var translateManager = TranslateManager()
+    private var translateManager = TranslationManager()
     
     // MARK: - Top Section
     private let topSection = TopSectionOfTranslate()
@@ -22,6 +24,16 @@ final class TranslateViewController: UIViewController {
     
     // MARK: - Translate UI ScrollView
     private let scrollView = TranslateScrollView()
+    
+    // MARK: - Audio Player
+    private var audioPlayer: AVAudioPlayer?
+    
+    // MARK: - Speech Recognition
+    private var speechRecognizer: SFSpeechRecognizer!
+    
+    private var recognitionRequest: SFSpeechAudioBufferRecognitionRequest?
+    private var recognitionTask: SFSpeechRecognitionTask?
+    private let audioEngine = AVAudioEngine()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -38,6 +50,8 @@ final class TranslateViewController: UIViewController {
         middleSection.delegate = self
         bottomSection.delegate = self
         
+        prepareRecognizer(identifier: TranslationManager.sourceLanguage.languageIdentifier)
+        
         NotificationCenter.default.addObserver(self, selector: #selector(changeFavouriteStarImage), name: .changeFavouriteStarImage, object: nil)
         
         // 임시
@@ -48,9 +62,29 @@ final class TranslateViewController: UIViewController {
         UserDefaults.standard.set(
             nil, forKey: UserDefaults.Key.favouriteList.rawValue
         )
-        
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        
+        print("viewWillDisappear")
+        topSection.delegate = self
+        middleSection.isAllUserEventsAbleEnabled(isEnabled: true)
+        bottomSection.delegate = self
+        
+        if audioEngine.isRunning {
+            audioEngine.stop()
+            recognitionRequest?.endAudio()
+            middleSection.isVoiceInputButtonEnabled(false)
+            middleSection.updateVoiceInputButtonImage(false)
+            
+            print("Stop Recording")
+        }
+    }
     
     @objc func moveToHistory() {
         print("히스토리 화면으로 이동!!")
@@ -85,8 +119,32 @@ private extension TranslateViewController {
         
         // MARK: - Configure The Contraints of Bottom Section of Translate UI
         bottomSection.configureUI(scrollView.getContentView(), middleSection)
-        
         bottomSection.isHidden = true
+    }
+}
+
+// MARK: - Functions for Audio
+extension TranslateViewController: AVAudioPlayerDelegate {
+    func playAudio(data: Data) {
+        do {
+            // Initialize the audio player with the downloaded audio data
+            audioPlayer = try AVAudioPlayer(data: data)
+            audioPlayer?.prepareToPlay()
+            audioPlayer?.play()
+        } catch {
+            print("Failed to create audio player: \(error)")
+        }
+    }
+    
+    // Implement AVAudioPlayerDelegate "did finish" callback to cleanup and notify listener of completion.
+    func audioPlayerDidFinishPlaying(_ player: AVAudioPlayer, successfully flag: Bool) {
+        print(flag)
+        self.audioPlayer?.delegate = nil
+        self.audioPlayer = nil
+    }
+    
+    func audioPlayerDecodeErrorDidOccur(_ player: AVAudioPlayer, error: Error?) {
+        print(error)
     }
 }
 
@@ -106,8 +164,9 @@ extension TranslateViewController: TopSectionOfTranslateDelegate {
         
         let sourceLanguage = Language.allCases.filter { $0.language == sourceLanguageLabel.text! }[0]
         let targetLanguage = Language.allCases.filter { $0.language == targetLanguageLabel.text! }[0]
-        TranslateManager.sourceLanguage = sourceLanguage
-        TranslateManager.targetLanguage = targetLanguage
+        TranslationManager.sourceLanguage = sourceLanguage
+        prepareRecognizer(identifier: sourceLanguage.languageIdentifier)
+        TranslationManager.targetLanguage = targetLanguage
     }
     
     func stackViewTapped(
@@ -132,13 +191,14 @@ extension TranslateViewController: TopSectionOfTranslateDelegate {
                             switch type {
                             case .source:
                                 weakSelf.middleSection.updateSourceLangaugeLabel(value.language)
+                                weakSelf.prepareRecognizer(identifier: value.languageIdentifier)
                                 DispatchQueue.global().async {
-                                    TranslateManager.sourceLanguage = value
+                                    TranslationManager.sourceLanguage = value
                                 }
                             case .target:
                                 weakSelf.bottomSection.updateTargetLangaugeLabel(value.language)
                                 DispatchQueue.global().async {
-                                    TranslateManager.targetLanguage = value
+                                    TranslationManager.targetLanguage = value
                                 }
                             }
                         }
@@ -151,8 +211,43 @@ extension TranslateViewController: TopSectionOfTranslateDelegate {
     }
 }
 extension TranslateViewController: MiddleSectionOfTranslateDelegate {
+    
+    func playPronumciationSound(_ inputText: String) {
+        print(inputText)
+        AudioManager().getAudioContent(inputText, TranslationManager.sourceLanguage, .source) { result in
+            switch result {
+            case .success(let audioData):
+                print(audioData)
+                DispatchQueue.main.async {
+                    self.playAudio(data: audioData)
+                }
+            case .failure(let error):
+                print(error)
+            }
+        }
+    }
+    
     func clearInputButtonTapped(_ inputTextView: UITextView) {
         inputTextView.text = ""
+    }
+    
+    func voiceInputButtonTapped(_ inputTextView: UITextView) {
+        requestAuthorization()
+
+        if audioEngine.isRunning {
+            audioEngine.stop()
+            recognitionRequest?.endAudio()
+            middleSection.isVoiceInputButtonEnabled(false)
+            print("Stop Recording")
+        } else {
+            topSection.delegate = nil
+            middleSection.isAllUserEventsAbleEnabled(isEnabled: false)
+            bottomSection.delegate = nil
+            middleSection.updateVoiceInputButtonImage(true)
+            
+            startRecording(inputTextView)
+            print("Start Recording")
+        }
     }
     
     func translateButtonTapped(_ inputText: String) {
@@ -168,8 +263,8 @@ extension TranslateViewController: MiddleSectionOfTranslateDelegate {
                 }
                 
                 let newHistoryModel = CustomCellModel(
-                    sourceLanguage: TranslateManager.sourceLanguage,
-                    targetLanguage: TranslateManager.targetLanguage,
+                    sourceLanguage: TranslationManager.sourceLanguage,
+                    targetLanguage: TranslationManager.targetLanguage,
                     inputText: inputText,
                     translateText: response.translatedText,
                     isFavourite: false
@@ -178,17 +273,160 @@ extension TranslateViewController: MiddleSectionOfTranslateDelegate {
                 UserDefaults.standard.historyList = [newHistoryModel] + UserDefaults.standard.historyList
                 dump(UserDefaults.standard.historyList)
             case .failure(let error):
-                print(error.localizedDescription)
+                print(error)
             }
         }
         
     }
 }
 
+extension TranslateViewController: SFSpeechRecognizerDelegate {
+    func speechRecognizer(_ speechRecognizer: SFSpeechRecognizer, availabilityDidChange available: Bool) {
+        print(#function)
+        if available {
+            middleSection.isVoiceInputButtonEnabled(true)
+            middleSection.updateVoiceInputButtonImage(true, availability: available)
+        } else {
+            middleSection.isVoiceInputButtonEnabled(false)
+            middleSection.updateVoiceInputButtonImage(false, availability: available)
+        }
+    }
+    
+    
+    func requestAuthorization() {
+        print(#function)
+        SFSpeechRecognizer.requestAuthorization { (authStatus) in
+            
+            var isButtonEnabled = false
+            
+            switch authStatus {
+            case .authorized:
+                isButtonEnabled = true
+                
+            case .denied:
+                isButtonEnabled = false
+                print("User denied access to speech recognition")
+                
+            case .restricted:
+                isButtonEnabled = false
+                print("Speech recognition restricted on this device")
+                
+            case .notDetermined:
+                isButtonEnabled = false
+                print("Speech recognition not yet authorized")
+            }
+            
+            
+            OperationQueue.main.addOperation() {
+                self.middleSection.isVoiceInputButtonEnabled(isButtonEnabled)
+            }
+        }
+    }
+    
+    func startRecording(_ textView: UITextView) {
+        print(#function)
+        if recognitionTask != nil {
+            recognitionTask?.cancel()
+            recognitionTask = nil
+        }
+        
+        let audioSession = AVAudioSession.sharedInstance()
+        do {
+            try audioSession.setCategory(AVAudioSession.Category.record)
+            try audioSession.setMode(AVAudioSession.Mode.measurement)
+            try audioSession.setActive(true, options: .notifyOthersOnDeactivation)
+        } catch {
+            print("audioSession properties weren't set because of an error.")
+        }
+        
+        recognitionRequest = SFSpeechAudioBufferRecognitionRequest()
+        
+        let inputNode = audioEngine.inputNode
+        
+        guard let recognitionRequest = recognitionRequest else {
+            fatalError("Unable to create an SFSpeechAudioBufferRecognitionRequest object")
+        }
+        
+        recognitionRequest.shouldReportPartialResults = true
+        
+        recognitionTask = speechRecognizer?.recognitionTask(with: recognitionRequest, resultHandler: { (result, error) in
+            
+            var isFinal = false
+            
+            if result != nil {
+                textView.text = result?.bestTranscription.formattedString
+                isFinal = (result?.isFinal)!
+            }
+            
+            if error != nil || isFinal {
+
+                self.topSection.delegate = self
+                self.middleSection.isAllUserEventsAbleEnabled(isEnabled: true)
+                self.bottomSection.delegate = self
+                
+                self.audioEngine.stop()
+                inputNode.removeTap(onBus: 0)
+                
+                self.recognitionRequest = nil
+                self.recognitionTask = nil
+                
+                self.middleSection.isVoiceInputButtonEnabled(true)
+                self.middleSection.updateVoiceInputButtonImage(false)
+            }
+        })
+        
+        let recordingFormat = inputNode.outputFormat(forBus: 0)
+        inputNode.installTap(onBus: 0, bufferSize: 1024, format: recordingFormat) { (buffer, when) in
+            self.recognitionRequest?.append(buffer)
+        }
+        
+        audioEngine.prepare()
+        
+        do {
+            try audioEngine.start()
+        } catch {
+            print("audioEngine couldn't start because of an error.")
+        }
+        
+        textView.text = ""
+        textView.textColor = UIColor.black
+        
+    }
+    
+    private func prepareRecognizer(identifier: String) {
+        let locale = Locale(identifier: identifier)
+        speechRecognizer = SFSpeechRecognizer(locale: locale)!
+        print(speechRecognizer.locale)
+        speechRecognizer.delegate = self
+    }
+}
+
 extension TranslateViewController: BottomSectionOfTranslateDelegate {
+    func playPronumciationSound(_ resultLabelText: String?) {
+        guard let translatedText = resultLabelText else { return }
+        AudioManager().getAudioContent(translatedText, TranslationManager.targetLanguage, .target) { result in
+            switch result {
+            case .success(let audioData):
+                print(audioData)
+                DispatchQueue.main.async {
+                    self.playAudio(data: audioData)
+                }
+            case .failure(let error):
+                print(error)
+            }
+        }
+    }
+    
     func copyButtonTapped(_ resultLabelText: String?) {
         print("\(resultLabelText)가 복사되었습니다")
         UIPasteboard.general.string = resultLabelText
+    }
+    
+    func shareButtonTapped() {
+        let vc = UIActivityViewController(activityItems: ["Check my app at www.myapp.example.com"], applicationActivities: nil)
+        vc.popoverPresentationController?.sourceView = self.view
+        
+        self.present(vc, animated: true, completion: nil)
     }
     
     func favouriteButtonTapped(_ favouriteButton: UIButton) {
@@ -204,16 +442,16 @@ extension TranslateViewController: BottomSectionOfTranslateDelegate {
                 UserDefaults.standard.favouriteList = [firstOfHistoryList] + UserDefaults.standard.favouriteList
             } else {
                 let newFavourite = CustomCellModel(
-                    sourceLanguage: TranslateManager.sourceLanguage,
-                    targetLanguage: TranslateManager.targetLanguage,
-                    inputText: TranslateManager.inputText,
-                    translateText: TranslateManager.translatedText,
+                    sourceLanguage: TranslationManager.sourceLanguage,
+                    targetLanguage: TranslationManager.targetLanguage,
+                    inputText: TranslationManager.inputText,
+                    translateText: TranslationManager.translatedText,
                     isFavourite: true
                 )
                 
                 UserDefaults.standard.favouriteList = [newFavourite] + UserDefaults.standard.favouriteList
             }
-           
+            
             DispatchQueue.main.async {
                 favouriteButton.setImage(UIImage(systemName: "star.fill", withConfiguration: imageConfiguration), for: .normal)
             }
@@ -231,20 +469,6 @@ extension TranslateViewController: BottomSectionOfTranslateDelegate {
             }
         }
     }
-}
-
-extension MiddleSectionOfTranslate {
-    @objc func playPronumciationSound() {
-        print(#function)
-    }
-    
-    
-    
-    @objc func voiceInputButtonTapped() {
-        print(#function)
-    }
-    
-    
 }
 
 

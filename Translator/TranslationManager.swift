@@ -1,5 +1,5 @@
 //
-//  TranslatorManager.swift
+//  TranslationManager.swift
 //  Translator
 //
 //  Created by SUCHAN CHANG on 2023/08/27.
@@ -7,14 +7,19 @@
 
 import Foundation
 
-struct TranslateManager {
+struct TranslationManager {
+    // TODO: Refactor the code below
     static var inputText: String = ""
     static var translatedText: String = ""
-    static var sourceLanguage: Language = .ko
+    static var sourceLanguage: Language = .ko {
+        didSet {
+            print(sourceLanguage.languageIdentifier)
+        }
+    }
     static var targetLanguage: Language = .en
 }
 
-extension TranslateManager {
+extension TranslationManager {
     func translate(
         _ inputText: String = "",
         completion: @escaping (Result<TranslatedText, NetworkError>) -> Void
@@ -26,8 +31,8 @@ extension TranslateManager {
             headers: [
                 "Content-Type": "application/json"
             ], payload: [
-                "source": TranslateManager.sourceLanguage.languageCode,
-                "target": TranslateManager.targetLanguage.languageCode,
+                "source": TranslationManager.sourceLanguage.languageCode,
+                "target": TranslationManager.targetLanguage.languageCode,
                 "text": inputText
             ]) else {
             completion(.failure(.invalidRequest))
@@ -52,8 +57,8 @@ extension TranslateManager {
                 let decoder = JSONDecoder()
                 let response = try decoder.decode(TranslatedText.self, from: data)
                 
-                TranslateManager.inputText = inputText
-                TranslateManager.translatedText = response.translatedText ?? ""
+                TranslationManager.inputText = inputText
+                TranslationManager.translatedText = response.translatedText ?? ""
                 
                 completion(.success(response))
             } catch {

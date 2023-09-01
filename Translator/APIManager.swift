@@ -14,6 +14,7 @@ enum NetworkError: Error {
     case requestFailed(Error)
     case invalidData
     case decodingFailed(Error)
+    case downloadingFailed(Error)
 }
 
 enum HttpMethod {

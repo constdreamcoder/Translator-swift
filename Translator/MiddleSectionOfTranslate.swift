@@ -8,7 +8,9 @@
 import UIKit
 
 protocol MiddleSectionOfTranslateDelegate: AnyObject {
+    func playPronumciationSound(_ inputText: String)
     func clearInputButtonTapped(_ inputTextView: UITextView)
+    func voiceInputButtonTapped(_ inputTextView: UITextView)
     func translateButtonTapped(_ inputText: String)
 }
 
@@ -18,7 +20,7 @@ final class MiddleSectionOfTranslate: UIView {
     
     private lazy var sourceLangaugeLabel: UILabel = {
         let label = UILabel()
-        label.text = "한국"
+        label.text = "한국어"
         label.font = .systemFont(ofSize: 16.0, weight: .semibold)
         label.textColor = UIColor(red: 0, green: 0.2, blue: 0.4, alpha: 1)
         return label
@@ -197,21 +199,67 @@ extension MiddleSectionOfTranslate {
             weakSelf.sourceLangaugeLabel.text = sourceLanguage
         }
     }
+    
+    func isVoiceInputButtonEnabled(_ isEnabled: Bool) {
+        voiceInputButton.isEnabled = isEnabled
+    }
+    
+    func updateVoiceInputButtonImage(_ recording: Bool = false, availability: Bool = true) {
+        print(#function)
+        
+        let imageConfiguration = UIImage.SymbolConfiguration(pointSize: 16, weight: .medium, scale: .large)
+        
+        if !availability {
+            voiceInputButton.setImage(UIImage(systemName: "xmark.circle.fill", withConfiguration: imageConfiguration), for: .disabled)
+            return
+        }
+        
+        print("recording: \(recording)")
+        if recording {
+            voiceInputButton.setImage(UIImage(systemName: "stop.fill", withConfiguration: imageConfiguration), for: .normal)
+        } else {
+            voiceInputButton.setImage(UIImage(systemName: "mic.fill", withConfiguration: imageConfiguration), for: .normal)
+        }
+    }
 }
 
 // MARK: - User Event Methods
-private extension MiddleSectionOfTranslate {
-    @objc func clearInputButtonTapped() {
+ extension MiddleSectionOfTranslate {
+    
+    @objc private func playPronumciationSound() {
+        print(#function)
+        if !inputTextView.text.isEmpty
+            && inputTextView.textColor != nil
+            && inputTextView.textColor != UIColor.lightGray {
+            print("inputTextView.text")
+            print(inputTextView.text)
+            delegate?.playPronumciationSound(inputTextView.text)
+        }
+    }
+    
+    @objc private func clearInputButtonTapped() {
         print(#function)
         delegate?.clearInputButtonTapped(inputTextView)
     }
     
-    @objc func translateButtonTapped() {
+    @objc private func voiceInputButtonTapped() {
+        print(#function)
+        delegate?.voiceInputButtonTapped(inputTextView)
+    }
+    
+    @objc private func translateButtonTapped() {
         print(#function)
         if !inputTextView.text.isEmpty
             && inputTextView.textColor != nil
             && inputTextView.textColor != UIColor.lightGray {
             delegate?.translateButtonTapped(inputTextView.text)
         }
+    }
+    
+    func isAllUserEventsAbleEnabled(isEnabled: Bool) {
+        sourceLanguagePronunciationPlayButton.isEnabled = isEnabled
+        clearInputButton.isEnabled = isEnabled
+        translateButton.isEnabled = isEnabled
+        inputTextView.isEditable = isEnabled
     }
 }
