@@ -113,7 +113,6 @@ final class TopSectionOfTranslate: UIStackView {
         self.layer.shadowOpacity = 1
         self.layer.shadowRadius = 3
         self.layer.shadowOffset = CGSize(width: 0, height: 1)
-        
     }
     
     required init(coder: NSCoder) {

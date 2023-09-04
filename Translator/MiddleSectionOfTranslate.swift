@@ -206,7 +206,6 @@ extension MiddleSectionOfTranslate {
     
     func updateVoiceInputButtonImage(_ recording: Bool = false, availability: Bool = true) {
         print(#function)
-        
         let imageConfiguration = UIImage.SymbolConfiguration(pointSize: 16, weight: .medium, scale: .large)
         
         if !availability {

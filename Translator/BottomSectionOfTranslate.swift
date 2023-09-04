@@ -107,7 +107,6 @@ final class BottomSectionOfTranslate: UIView {
     
     override init(frame: CGRect) {
         super.init(frame: .zero)
-        
         [
             targetLanguagePronunciationStackView,
             resultBaseView,
@@ -188,6 +187,7 @@ extension BottomSectionOfTranslate {
     }
     
     func updateFavouriteButton(_ isFavourite: Bool = false) {
+        
         let imageConfiguration = UIImage.SymbolConfiguration(pointSize: 26, weight: .medium, scale: .large)
         if isFavourite {
             favouriteButton.setImage(UIImage(systemName: "star.fill", withConfiguration: imageConfiguration), for: .normal)

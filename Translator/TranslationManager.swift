@@ -11,11 +11,7 @@ struct TranslationManager {
     // TODO: Refactor the code below
     static var inputText: String = ""
     static var translatedText: String = ""
-    static var sourceLanguage: Language = .ko {
-        didSet {
-            print(sourceLanguage.languageIdentifier)
-        }
-    }
+    static var sourceLanguage: Language = .ko
     static var targetLanguage: Language = .en
 }
 

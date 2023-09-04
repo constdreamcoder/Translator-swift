@@ -291,8 +291,7 @@ extension TranslateViewController: SFSpeechRecognizerDelegate {
             middleSection.updateVoiceInputButtonImage(false, availability: available)
         }
     }
-    
-    
+
     func requestAuthorization() {
         print(#function)
         SFSpeechRecognizer.requestAuthorization { (authStatus) in
@@ -315,7 +314,6 @@ extension TranslateViewController: SFSpeechRecognizerDelegate {
                 isButtonEnabled = false
                 print("Speech recognition not yet authorized")
             }
-            
             
             OperationQueue.main.addOperation() {
                 self.middleSection.isVoiceInputButtonEnabled(isButtonEnabled)
