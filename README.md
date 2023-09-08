@@ -37,13 +37,13 @@ Swift 언어를 활용한 번역기 앱
 
 ## 👨‍👧‍👧 사용 기술 스택
 
-### Frontend
+### 🔗 [Frontend](https://github.com/constdreamcoder/Translator-swift)
 
 <div align='left'>
   <img src="https://img.shields.io/badge/swift-e8e8e8?style=for-the-badge&logo=swift&logoColor=F05138">
 </div>
 
-### Backend
+### 🔗 [Backend](https://github.com/constdreamcoder/translator-backend)
 
 <div align='left'>
   <img src="https://img.shields.io/badge/node.js-339933?style=for-the-badge&logo=Node.js&logoColor=white">
