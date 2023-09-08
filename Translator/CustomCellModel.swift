@@ -16,7 +16,3 @@ struct CustomCellModel: Codable {
     var isFavourite: Bool?
     var createdAt = Date()
 }
-
-class CustomCellModelManager {
-    
-}

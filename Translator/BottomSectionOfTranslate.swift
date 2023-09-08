@@ -20,7 +20,7 @@ final class BottomSectionOfTranslate: UIView {
     
     private lazy var targetLangaugeLabel: UILabel = {
         let label = UILabel()
-        label.text = "영어"
+        label.text = TranslationManager.targetLanguage.language
         label.font = .systemFont(ofSize: 16.0, weight: .semibold)
         label.textColor = UIColor(red: 0, green: 0.2, blue: 0.4, alpha: 1)
         label.tag = 1

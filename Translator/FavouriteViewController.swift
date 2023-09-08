@@ -24,7 +24,7 @@ final class FavouriteViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        navigationItem.title = "즐겨찾기"
+        navigationItem.title = "Saved".localized
         navigationController?.navigationBar.prefersLargeTitles = true
 
         setupViews()

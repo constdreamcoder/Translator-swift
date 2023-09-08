@@ -37,7 +37,7 @@ final class TranslateViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        navigationItem.title = "번역"
+        navigationItem.title = "Translation".localized
         navigationItem.rightBarButtonItem = UIBarButtonItem(
             image: UIImage(named: "historyIcon"),
             style: .done,
@@ -55,13 +55,13 @@ final class TranslateViewController: UIViewController {
         NotificationCenter.default.addObserver(self, selector: #selector(changeFavouriteStarImage), name: .changeFavouriteStarImage, object: nil)
         
         // 임시
-        UserDefaults.standard.set(
-            nil, forKey: UserDefaults.Key.historyList.rawValue
-        )
-        
-        UserDefaults.standard.set(
-            nil, forKey: UserDefaults.Key.favouriteList.rawValue
-        )
+//        UserDefaults.standard.set(
+//            nil, forKey: UserDefaults.Key.historyList.rawValue
+//        )
+//        
+//        UserDefaults.standard.set(
+//            nil, forKey: UserDefaults.Key.favouriteList.rawValue
+//        )
     }
     
     override func viewWillAppear(_ animated: Bool) {

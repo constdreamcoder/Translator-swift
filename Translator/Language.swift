@@ -27,20 +27,19 @@ enum Language: String, Codable, CaseIterable {
             return "ja-JP"
         case .zh:
             return "cmn-CN"
-            
         }
     }
     
     var language: String {
         switch self {
         case .ko:
-            return "한국어"
+            return "Korean".localized
         case .en:
-            return "영어"
+            return "English".localized
         case .ja:
-            return "일본어"
+            return "Japanese".localized
         case .zh:
-            return "중국어"
+            return "Chinese".localized
         }
     }
     

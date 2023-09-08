@@ -24,9 +24,9 @@ final class HistoryViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        navigationItem.title = "히스토리"
+        navigationItem.title = "History".localized
         navigationItem.rightBarButtonItem = UIBarButtonItem(
-            title: "모두 지우기",
+            title: "Clear all".localized,
             style: .done,
             target: self,
             action: #selector(clearAllHistoryRecords)

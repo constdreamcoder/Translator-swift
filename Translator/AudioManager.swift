@@ -16,7 +16,7 @@ struct AudioManager {
     ) {
         
         guard let request = APIManager().setupURLRequest(
-            endPoint: "/texttospeech",
+            endPoint: "/audio/play",
             httpMethod: .POST,
             headers: [
                 "Content-Type": "application/json"

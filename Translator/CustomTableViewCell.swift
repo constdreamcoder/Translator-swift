@@ -19,15 +19,14 @@ final class CustomTableViewCell: UITableViewCell {
     
     private lazy var sourceLanguageLabel: UILabel = {
         let label = UILabel()
-        label.text = "한국어"
+        label.text = TranslationManager.sourceLanguage.language
         label.font = .systemFont(ofSize: 16.0, weight: .semibold)
         return label
     }()
     
     private lazy var inputTextLabel: UILabel = {
         let label = UILabel()
-//        label.text = "안녕하세요."
-        label.text = "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's"
+        label.text = ""
         label.font = .systemFont(ofSize: 14.0)
         label.textColor = UIColor(red: 0, green: 0.2, blue: 0.4, alpha: 1)
         label.numberOfLines = 0
@@ -52,7 +51,7 @@ final class CustomTableViewCell: UITableViewCell {
     
     private lazy var targetLanguageLabel: UILabel = {
         let label = UILabel()
-        label.text = ""
+        label.text = TranslationManager.targetLanguage.language
         label.font = .systemFont(ofSize: 16.0, weight: .semibold)
         return label
     }()

@@ -35,7 +35,7 @@ final class TopSectionOfTranslate: UIStackView {
     
     private lazy var sourceLanguageLabel: UILabel = {
         let label = UILabel()
-        label.text = "한국어"
+        label.text = TranslationManager.sourceLanguage.language
         label.font = .systemFont(ofSize: 16.0, weight: .semibold)
         return label
     }()
@@ -73,7 +73,7 @@ final class TopSectionOfTranslate: UIStackView {
     
     private lazy var targetLanguageLabel: UILabel = {
         let label = UILabel()
-        label.text = "영어"
+        label.text = TranslationManager.targetLanguage.language
         label.font = .systemFont(ofSize: 16.0, weight: .semibold)
         return label
     }()

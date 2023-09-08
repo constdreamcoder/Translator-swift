@@ -22,6 +22,8 @@
 		006C553C2A8F53B7009E24BA /* FavouriteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 006C553B2A8F53B7009E24BA /* FavouriteViewController.swift */; };
 		006C553E2A8F5C14009E24BA /* HistoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 006C553D2A8F5C14009E24BA /* HistoryViewController.swift */; };
 		009098172A97527300D1745B /* CustomTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 009098162A97527300D1745B /* CustomTableViewCell.swift */; };
+		009CDE142AAAC7C400ADA4F1 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 009CDE162AAAC7C400ADA4F1 /* Localizable.strings */; };
+		009CDE1B2AAAC85000ADA4F1 /* String+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 009CDE1A2AAAC85000ADA4F1 /* String+.swift */; };
 		00C08B442A9F825300829C3C /* AudioManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00C08B432A9F825300829C3C /* AudioManager.swift */; };
 		00C6E1532A9B180E00182371 /* Language.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00C6E1522A9B180E00182371 /* Language.swift */; };
 		00C6E1552A9B2D9700182371 /* Type.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00C6E1542A9B2D9700182371 /* Type.swift */; };
@@ -49,6 +51,11 @@
 		006C553B2A8F53B7009E24BA /* FavouriteViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavouriteViewController.swift; sourceTree = "<group>"; };
 		006C553D2A8F5C14009E24BA /* HistoryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryViewController.swift; sourceTree = "<group>"; };
 		009098162A97527300D1745B /* CustomTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTableViewCell.swift; sourceTree = "<group>"; };
+		009CDE152AAAC7C400ADA4F1 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
+		009CDE172AAAC7F600ADA4F1 /* ko */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ko; path = ko.lproj/Localizable.strings; sourceTree = "<group>"; };
+		009CDE182AAAC80500ADA4F1 /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/Localizable.strings; sourceTree = "<group>"; };
+		009CDE192AAAC81100ADA4F1 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Localizable.strings"; sourceTree = "<group>"; };
+		009CDE1A2AAAC85000ADA4F1 /* String+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+.swift"; sourceTree = "<group>"; };
 		00C08B432A9F825300829C3C /* AudioManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioManager.swift; sourceTree = "<group>"; };
 		00C6E1522A9B180E00182371 /* Language.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Language.swift; sourceTree = "<group>"; };
 		00C6E1542A9B2D9700182371 /* Type.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Type.swift; sourceTree = "<group>"; };
@@ -84,6 +91,7 @@
 			children = (
 				0039F32D2A9B3FD10035ECAB /* UserDefaults+.swift */,
 				0053B7F72A9CEA62000670E8 /* NotificationName+.swift */,
+				009CDE1A2AAAC85000ADA4F1 /* String+.swift */,
 			);
 			name = Extensions;
 			sourceTree = "<group>";
@@ -114,11 +122,27 @@
 				00E621852A934E0A00031973 /* Models */,
 				00E621862A934E4C00031973 /* Views */,
 				00E621872A934E5D00031973 /* Controllers */,
-				006C552E2A8F4C38009E24BA /* Assets.xcassets */,
-				006C55302A8F4C38009E24BA /* LaunchScreen.storyboard */,
-				006C55332A8F4C38009E24BA /* Info.plist */,
+				009CDE112AAAC68800ADA4F1 /* Settings */,
+				009CDE102AAAC66C00ADA4F1 /* Others */,
 			);
 			path = Translator;
+			sourceTree = "<group>";
+		};
+		009CDE102AAAC66C00ADA4F1 /* Others */ = {
+			isa = PBXGroup;
+			children = (
+				006C552E2A8F4C38009E24BA /* Assets.xcassets */,
+			);
+			name = Others;
+			sourceTree = "<group>";
+		};
+		009CDE112AAAC68800ADA4F1 /* Settings */ = {
+			isa = PBXGroup;
+			children = (
+				006C55332A8F4C38009E24BA /* Info.plist */,
+				009CDE162AAAC7C400ADA4F1 /* Localizable.strings */,
+			);
+			name = Settings;
 			sourceTree = "<group>";
 		};
 		00E621852A934E0A00031973 /* Models */ = {
@@ -135,6 +159,7 @@
 		00E621862A934E4C00031973 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				006C55302A8F4C38009E24BA /* LaunchScreen.storyboard */,
 				009098162A97527300D1745B /* CustomTableViewCell.swift */,
 				00E8D9262A939E78004F24CE /* Translate */,
 			);
@@ -205,6 +230,9 @@
 			knownRegions = (
 				en,
 				Base,
+				ko,
+				ja,
+				"zh-Hans",
 			);
 			mainGroup = 006C55192A8F4C38009E24BA;
 			productRefGroup = 006C55232A8F4C38009E24BA /* Products */;
@@ -222,6 +250,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				006C55322A8F4C38009E24BA /* LaunchScreen.storyboard in Resources */,
+				009CDE142AAAC7C400ADA4F1 /* Localizable.strings in Resources */,
 				006C552F2A8F4C38009E24BA /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -252,6 +281,7 @@
 				00E4FD832A98A94D008BDDE8 /* TranslatedText.swift in Sources */,
 				006C553C2A8F53B7009E24BA /* FavouriteViewController.swift in Sources */,
 				006C55282A8F4C38009E24BA /* SceneDelegate.swift in Sources */,
+				009CDE1B2AAAC85000ADA4F1 /* String+.swift in Sources */,
 				00C08B442A9F825300829C3C /* AudioManager.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -267,6 +297,17 @@
 			name = LaunchScreen.storyboard;
 			sourceTree = "<group>";
 		};
+		009CDE162AAAC7C400ADA4F1 /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				009CDE152AAAC7C400ADA4F1 /* en */,
+				009CDE172AAAC7F600ADA4F1 /* ko */,
+				009CDE182AAAC80500ADA4F1 /* ja */,
+				009CDE192AAAC81100ADA4F1 /* zh-Hans */,
+			);
+			name = Localizable.strings;
+			sourceTree = "<group>";
+		};
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
@@ -274,6 +315,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
@@ -320,7 +362,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -334,6 +376,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
@@ -374,7 +417,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;

@@ -32,7 +32,8 @@ enum HttpMethod {
 }
 
 struct APIManager {
-    let mainURL = "http://localhost:3000"
+//    private let mainURL = "https://translatelanguage.shop"
+    private let mainURL = "http://localhost:3000"
     
     func setupURLRequest(
         endPoint: String = "/",

@@ -20,7 +20,7 @@ final class MiddleSectionOfTranslate: UIView {
     
     private lazy var sourceLangaugeLabel: UILabel = {
         let label = UILabel()
-        label.text = "한국어"
+        label.text = TranslationManager.sourceLanguage.language
         label.font = .systemFont(ofSize: 16.0, weight: .semibold)
         label.textColor = UIColor(red: 0, green: 0.2, blue: 0.4, alpha: 1)
         return label
@@ -62,7 +62,7 @@ final class MiddleSectionOfTranslate: UIView {
     private lazy var inputTextView: UITextView = {
         let textView = UITextView()
         textView.font = .systemFont(ofSize: 20.0, weight: .semibold)
-        textView.text = "번역할 내용을 입력해주세요."
+        textView.text = "Please enter the content you want to translate.".localized
         textView.textColor = UIColor.lightGray
         textView.delegate = self
         return textView
@@ -81,7 +81,7 @@ final class MiddleSectionOfTranslate: UIView {
     
     private lazy var translateButton: UIButton = {
         let button = UIButton()
-        button.setTitle("번역하기", for: .normal)
+        button.setTitle("Translate".localized, for: .normal)
         button.setTitleColor(.white, for: .normal)
         button.setTitleColor(.systemGray2, for: .highlighted)
         button.titleLabel?.font = .systemFont(ofSize: 18.0, weight: .medium)
@@ -176,7 +176,7 @@ extension MiddleSectionOfTranslate: UITextViewDelegate {
     func textViewDidEndEditing(_ textView: UITextView) {
         print(#function)
         if textView.text.isEmpty {
-            textView.text = "번역할 내용을 입력해주세요."
+            textView.text = "Please enter the content you want to translate.".localized
             textView.textColor = UIColor.lightGray
         }
     }

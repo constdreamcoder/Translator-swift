@@ -1,0 +1,25 @@
+/* 
+  Localizable.strings
+  Translator
+
+  Created by SUCHAN CHANG on 2023/09/08.
+  
+*/
+
+// MARK: - Language
+"Korean" = "Korean";
+"English" = "English";
+"Japanese" = "Japanese";
+"Chinese" = "Chinese";
+
+// MARK: - TabBar Title, Navigation Title
+"Translation" = "Translation";
+"Saved" = "Saved";
+"History" = "History";
+
+// MARK: - MiddleSectionOfTranslate
+"Please enter the content you want to translate." = "Please enter the content you want to translate.";
+"Translate" = "Translate";
+
+// MARK: - HistoryController
+"Clear all" = "Clear all";
