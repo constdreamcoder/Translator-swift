@@ -102,7 +102,6 @@ final class TopSectionOfTranslate: UIStackView {
         self.distribution = .equalSpacing
         [
             sourceLanguageStackView,
-            languageSwapButton,
             targetLanguageStackView
         ].forEach { self.addArrangedSubview($0) }
         self.layer.cornerRadius = 27.0
@@ -113,6 +112,8 @@ final class TopSectionOfTranslate: UIStackView {
         self.layer.shadowOpacity = 1
         self.layer.shadowRadius = 3
         self.layer.shadowOffset = CGSize(width: 0, height: 1)
+        
+        self.addSubview(languageSwapButton)
     }
     
     required init(coder: NSCoder) {
@@ -125,6 +126,8 @@ final class TopSectionOfTranslate: UIStackView {
         
         self.translatesAutoresizingMaskIntoConstraints = false
         
+        languageSwapButton.translatesAutoresizingMaskIntoConstraints = false
+        
         NSLayoutConstraint.activate([
             sourceLanguageNationalFlagImageView.widthAnchor.constraint(equalToConstant: 32.0),
             sourceLanguageNationalFlagImageView.heightAnchor.constraint(equalTo: sourceLanguageNationalFlagImageView.widthAnchor, multiplier: 1),
@@ -136,6 +139,9 @@ final class TopSectionOfTranslate: UIStackView {
             self.leadingAnchor.constraint(equalTo: superUIView.leadingAnchor, constant: 23.0),
             self.trailingAnchor.constraint(equalTo: superUIView.trailingAnchor, constant: -23.0),
             self.heightAnchor.constraint(equalToConstant: 54.0),
+            
+            languageSwapButton.centerXAnchor.constraint(equalTo: self.centerXAnchor),
+            languageSwapButton.centerYAnchor.constraint(equalTo: self.centerYAnchor)
         ])
     }
 }

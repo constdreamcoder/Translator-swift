@@ -73,8 +73,6 @@ extension FavouriteViewController: UITableViewDataSource {
         cell.setupCustomCellData()
         return cell
     }
-    
-    
 }
 
 extension FavouriteViewController: UITableViewDelegate {
