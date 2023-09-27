@@ -190,7 +190,7 @@ extension TranslateViewController: TopSectionOfTranslateDelegate {
         _ languageLabel: UILabel,
         _ type: Type
     ) {
-        let actionSheet = UIAlertController(title: "언어를 골라주세요.", message: nil, preferredStyle: .actionSheet)
+        let actionSheet = UIAlertController(title: "Please select a language".localized, message: nil, preferredStyle: .actionSheet)
         
         Language.allCases.forEach { value in
             actionSheet.addAction(
@@ -223,7 +223,7 @@ extension TranslateViewController: TopSectionOfTranslateDelegate {
             )
         }
         
-        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+        let cancelAction = UIAlertAction(title: "Cancel".localized, style: .cancel, handler: nil)
         
         actionSheet.addAction(cancelAction)
         

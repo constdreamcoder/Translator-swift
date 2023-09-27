@@ -17,6 +17,10 @@
 "Saved" = "保存済み";
 "History" = "履歴";
 
+// MARK: - TranslateViewController
+"Please select a language" = "言語を選択してください";
+"Cancel" = "キャンセル";
+
 // MARK: - MiddleSectionOfTranslate
 "Please enter the content you want to translate." = "翻訳する内容を入力してください。";
 "Translate" = "翻訳する";

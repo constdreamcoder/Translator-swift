@@ -17,6 +17,10 @@
 "Saved" = "Saved";
 "History" = "History";
 
+// MARK: - TranslateViewController
+"Please select a language" = "Please select a language";
+"Cancel" = "Cancel";
+
 // MARK: - MiddleSectionOfTranslate
 "Please enter the content you want to translate." = "Please enter the content you want to translate.";
 "Translate" = "Translate";
