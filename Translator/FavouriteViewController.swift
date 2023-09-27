@@ -15,7 +15,7 @@ final class FavouriteViewController: UIViewController {
         tableView.dataSource = self
         tableView.delegate = self
         tableView.register(CustomTableViewCell.self, forCellReuseIdentifier: CustomTableViewCell.identifier)
-        tableView.backgroundColor = UIColor(red: 0.98, green: 0.98, blue: 0.98, alpha: 1)
+        tableView.backgroundColor = UIColor(red: 0.93, green: 0.93, blue: 0.93, alpha: 1)
         tableView.separatorStyle = .none
         tableView.showsVerticalScrollIndicator = false
         return tableView
@@ -26,7 +26,7 @@ final class FavouriteViewController: UIViewController {
 
         navigationItem.title = "Saved".localized
         navigationController?.navigationBar.prefersLargeTitles = true
-
+        
         setupViews()
     }
     
@@ -65,7 +65,7 @@ extension FavouriteViewController: UITableViewDataSource {
         }
         cell.configureUI()
         cell.selectionStyle = .none
-        cell.backgroundColor = .none
+        cell.backgroundColor = UIColor(red: 0.93, green: 0.93, blue: 0.93, alpha: 1)
         
         cell.delegate = self
         

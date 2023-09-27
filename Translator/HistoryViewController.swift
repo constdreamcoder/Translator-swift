@@ -17,6 +17,7 @@ final class HistoryViewController: UIViewController {
         tableView.delegate = self
         tableView.register(CustomTableViewCell.self, forCellReuseIdentifier: CustomTableViewCell.identifier)
         tableView.separatorStyle = .none
+        tableView.backgroundColor = UIColor(red: 0.93, green: 0.93, blue: 0.93, alpha: 1)
         tableView.showsVerticalScrollIndicator = false
         return tableView
     }()
@@ -32,7 +33,7 @@ final class HistoryViewController: UIViewController {
             action: #selector(clearAllHistoryRecords)
         )
         navigationItem.rightBarButtonItem?.tintColor = .systemRed
-        
+                
         setupViews()
     }
     
@@ -128,7 +129,5 @@ extension HistoryViewController: CustomTableViewCellDelegate {
                 NotificationCenter.default.post(name: .changeFavouriteStarImage, object: false)
             }
         }
-        
-        
     }
 }
