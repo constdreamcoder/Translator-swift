@@ -54,14 +54,15 @@ final class TranslateViewController: UIViewController {
         
         NotificationCenter.default.addObserver(self, selector: #selector(changeFavouriteStarImage), name: .changeFavouriteStarImage, object: nil)
         
+        hideKeyboard()
         // 임시
-//        UserDefaults.standard.set(
-//            nil, forKey: UserDefaults.Key.historyList.rawValue
-//        )
-//        
-//        UserDefaults.standard.set(
-//            nil, forKey: UserDefaults.Key.favouriteList.rawValue
-//        )
+        //        UserDefaults.standard.set(
+        //            nil, forKey: UserDefaults.Key.historyList.rawValue
+        //        )
+        //
+        //        UserDefaults.standard.set(
+        //            nil, forKey: UserDefaults.Key.favouriteList.rawValue
+        //        )
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -73,7 +74,7 @@ final class TranslateViewController: UIViewController {
         
         print("viewWillDisappear")
         topSection.delegate = self
-        middleSection.isAllUserEventsAbleEnabled(isEnabled: true)
+        middleSection.isAllUserEventsEnabled(isEnabled: true)
         bottomSection.delegate = self
         
         if audioEngine.isRunning {
@@ -84,6 +85,15 @@ final class TranslateViewController: UIViewController {
             
             print("Stop Recording")
         }
+    }
+    
+    func hideKeyboard() {
+        let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
+        view.addGestureRecognizer(tap)
+    }
+    
+    @objc func dismissKeyboard() {
+        view.endEditing(true)
     }
     
     @objc func moveToHistory() {
@@ -127,14 +137,20 @@ private extension TranslateViewController {
 extension TranslateViewController: AVAudioPlayerDelegate {
     func playAudio(data: Data) {
         do {
+            
+            try AVAudioSession.sharedInstance().setCategory(AVAudioSession.Category.playback)
+            try AVAudioSession.sharedInstance().setActive(true)
+            
             // Initialize the audio player with the downloaded audio data
             audioPlayer = try AVAudioPlayer(data: data)
             audioPlayer?.prepareToPlay()
+            audioPlayer?.volume = 5.0
             audioPlayer?.play()
         } catch {
             print("Failed to create audio player: \(error)")
         }
     }
+    
     
     // Implement AVAudioPlayerDelegate "did finish" callback to cleanup and notify listener of completion.
     func audioPlayerDidFinishPlaying(_ player: AVAudioPlayer, successfully flag: Bool) {
@@ -207,9 +223,14 @@ extension TranslateViewController: TopSectionOfTranslateDelegate {
             )
         }
         
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+        
+        actionSheet.addAction(cancelAction)
+        
         present(actionSheet, animated: true)
     }
 }
+
 extension TranslateViewController: MiddleSectionOfTranslateDelegate {
     
     func playPronumciationSound(_ inputText: String) {
@@ -233,7 +254,7 @@ extension TranslateViewController: MiddleSectionOfTranslateDelegate {
     
     func voiceInputButtonTapped(_ inputTextView: UITextView) {
         requestAuthorization()
-
+        
         if audioEngine.isRunning {
             audioEngine.stop()
             recognitionRequest?.endAudio()
@@ -241,7 +262,7 @@ extension TranslateViewController: MiddleSectionOfTranslateDelegate {
             print("Stop Recording")
         } else {
             topSection.delegate = nil
-            middleSection.isAllUserEventsAbleEnabled(isEnabled: false)
+            middleSection.isAllUserEventsEnabled(isEnabled: false)
             bottomSection.delegate = nil
             middleSection.updateVoiceInputButtonImage(true)
             
@@ -271,7 +292,7 @@ extension TranslateViewController: MiddleSectionOfTranslateDelegate {
                 )
                 
                 UserDefaults.standard.historyList = [newHistoryModel] + UserDefaults.standard.historyList
-                dump(UserDefaults.standard.historyList)
+                
             case .failure(let error):
                 print(error)
             }
@@ -285,13 +306,13 @@ extension TranslateViewController: SFSpeechRecognizerDelegate {
         print(#function)
         if available {
             middleSection.isVoiceInputButtonEnabled(true)
-            middleSection.updateVoiceInputButtonImage(true, availability: available)
+            middleSection.updateVoiceInputButtonImage(availability: available)
         } else {
             middleSection.isVoiceInputButtonEnabled(false)
-            middleSection.updateVoiceInputButtonImage(false, availability: available)
+            middleSection.updateVoiceInputButtonImage(availability: available)
         }
     }
-
+    
     func requestAuthorization() {
         print(#function)
         SFSpeechRecognizer.requestAuthorization { (authStatus) in
@@ -357,9 +378,9 @@ extension TranslateViewController: SFSpeechRecognizerDelegate {
             }
             
             if error != nil || isFinal {
-
+                
                 self.topSection.delegate = self
-                self.middleSection.isAllUserEventsAbleEnabled(isEnabled: true)
+                self.middleSection.isAllUserEventsEnabled(isEnabled: true)
                 self.bottomSection.delegate = self
                 
                 self.audioEngine.stop()

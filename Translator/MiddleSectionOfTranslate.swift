@@ -255,7 +255,7 @@ extension MiddleSectionOfTranslate {
         }
     }
     
-    func isAllUserEventsAbleEnabled(isEnabled: Bool) {
+    func isAllUserEventsEnabled(isEnabled: Bool) {
         sourceLanguagePronunciationPlayButton.isEnabled = isEnabled
         clearInputButton.isEnabled = isEnabled
         translateButton.isEnabled = isEnabled
