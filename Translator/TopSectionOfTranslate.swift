@@ -152,18 +152,29 @@ private extension TopSectionOfTranslate {
         delegate?.stackViewTapped(
             sourceLanguageNationalFlagImageView,
             sourceLanguageLabel,
-                .source
+            .source
         )
     }
     
     @objc func swapButtonTapped() {
         print(#function)
-        delegate?.swapButtonTapped(
-            sourceLanguageNationalFlagImageView,
-            sourceLanguageLabel,
-            targetLanguageNationalFlagImageView,
-            targetLanguageLabel
-        )
+        
+        UIView.animate(withDuration: 0.5) { [weak self] in
+            guard let weakSelf = self else { return }
+
+            weakSelf.languageSwapButton.imageView?.transform = (weakSelf.languageSwapButton.imageView?.transform.rotated(by: .pi))!
+        } completion: { [weak self] finished in
+            guard let weakSelf = self else { return }
+            
+            if finished {
+                weakSelf.delegate?.swapButtonTapped(
+                    weakSelf.sourceLanguageNationalFlagImageView,
+                    weakSelf.sourceLanguageLabel,
+                    weakSelf.targetLanguageNationalFlagImageView,
+                    weakSelf.targetLanguageLabel
+                )
+            }
+        }
     }
     
     @objc func targetStackViewTapped() {
@@ -171,7 +182,7 @@ private extension TopSectionOfTranslate {
         delegate?.stackViewTapped(
             targetLanguageNationalFlagImageView,
             targetLanguageLabel,
-                .target
+            .target
         )
     }
 }
