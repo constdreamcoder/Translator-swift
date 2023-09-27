@@ -62,7 +62,7 @@ final class MiddleSectionOfTranslate: UIView {
     private lazy var inputTextView: UITextView = {
         let textView = UITextView()
         textView.font = .systemFont(ofSize: 20.0, weight: .semibold)
-        textView.text = "Please enter the content you want to translate.".localized
+        textView.text = "Please enter the content you want to translate".localized
         textView.textColor = UIColor.lightGray
         textView.delegate = self
         return textView
@@ -176,7 +176,7 @@ extension MiddleSectionOfTranslate: UITextViewDelegate {
     func textViewDidEndEditing(_ textView: UITextView) {
         print(#function)
         if textView.text.isEmpty {
-            textView.text = "Please enter the content you want to translate.".localized
+            textView.text = "Please enter the content you want to translate".localized
             textView.textColor = UIColor.lightGray
         }
     }

@@ -20,9 +20,10 @@
 // MARK: - TranslateViewController
 "Please select a language" = "언어를 골라주세요";
 "Cancel" = "취소";
+"The text has been copied" = "텍스트가 복사되었습니다";
 
 // MARK: - MiddleSectionOfTranslate
-"Please enter the content you want to translate." = "번역할 내용을 입력해주세요.";
+"Please enter the content you want to translate" = "번역할 내용을 입력해주세요.";
 "Translate" = "번역하기";
 
 // MARK: - HistoryController

@@ -18,11 +18,12 @@
 "History" = "履歴";
 
 // MARK: - TranslateViewController
-"Please select a language" = "言語を選択してください";
+"Please select a language" = "言語を選択してください。";
 "Cancel" = "キャンセル";
+"The text has been copied" = "テキストがコピーされました。";
 
 // MARK: - MiddleSectionOfTranslate
-"Please enter the content you want to translate." = "翻訳する内容を入力してください。";
+"Please enter the content you want to translate" = "翻訳する内容を入力してください。";
 "Translate" = "翻訳する";
 
 // MARK: - HistoryController

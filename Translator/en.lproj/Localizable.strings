@@ -20,9 +20,10 @@
 // MARK: - TranslateViewController
 "Please select a language" = "Please select a language";
 "Cancel" = "Cancel";
+"The text has been copied" = "The text has been copied";
 
 // MARK: - MiddleSectionOfTranslate
-"Please enter the content you want to translate." = "Please enter the content you want to translate.";
+"Please enter the content you want to translate" = "Please enter the content you want to translate.";
 "Translate" = "Translate";
 
 // MARK: - HistoryController

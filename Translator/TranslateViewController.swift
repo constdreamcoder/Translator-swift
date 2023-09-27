@@ -8,6 +8,7 @@
 import UIKit
 import AVFoundation
 import Speech
+import Toast_Swift
 
 final class TranslateViewController: UIViewController {
     
@@ -55,6 +56,9 @@ final class TranslateViewController: UIViewController {
         NotificationCenter.default.addObserver(self, selector: #selector(changeFavouriteStarImage), name: .changeFavouriteStarImage, object: nil)
         
         hideKeyboard()
+        
+        // 토스트 메세지 Tap 시 사라짐
+        ToastManager.shared.isTapToDismissEnabled = true
         // 임시
         //        UserDefaults.standard.set(
         //            nil, forKey: UserDefaults.Key.historyList.rawValue
@@ -439,6 +443,7 @@ extension TranslateViewController: BottomSectionOfTranslateDelegate {
     func copyButtonTapped(_ resultLabelText: String?) {
         print("\(resultLabelText)가 복사되었습니다")
         UIPasteboard.general.string = resultLabelText
+        view.makeToast("The text has been copied".localized)
     }
     
     func shareButtonTapped() {

@@ -18,11 +18,12 @@
 "History" = "历史记录";
 
 // MARK: - TranslateViewController
-"Please select a language" = "请选择一种语言";
+"Please select a language" = "请选择一种语言。";
 "Cancel" = "取消";
+"The text has been copied" = "文本已被复制。";
 
 // MARK: - MiddleSectionOfTranslate
-"Please enter the content you want to translate." = "请输入您要翻译的内容。";
+"Please enter the content you want to translate" = "请输入您要翻译的内容。";
 "Translate" = "翻译";
 
 // MARK: - HistoryController
