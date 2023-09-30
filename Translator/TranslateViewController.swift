@@ -12,6 +12,8 @@ import Toast_Swift
 
 final class TranslateViewController: UIViewController {
     
+    private var whatIsPlayingNow: Type = .source
+    
     private var translateManager = TranslationManager()
     
     // MARK: - Top Section
@@ -47,10 +49,11 @@ final class TranslateViewController: UIViewController {
         )
         
         setupViews()
+        
         topSection.delegate = self
         middleSection.delegate = self
         bottomSection.delegate = self
-        
+    
         prepareRecognizer(identifier: TranslationManager.sourceLanguage.languageIdentifier)
         
         NotificationCenter.default.addObserver(self, selector: #selector(changeFavouriteStarImage), name: .changeFavouriteStarImage, object: nil)
@@ -71,6 +74,7 @@ final class TranslateViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -81,12 +85,13 @@ final class TranslateViewController: UIViewController {
         middleSection.isAllUserEventsEnabled(isEnabled: true)
         bottomSection.delegate = self
         
+        stopAudio()
+        
         if audioEngine.isRunning {
             audioEngine.stop()
             recognitionRequest?.endAudio()
             middleSection.isVoiceInputButtonEnabled(false)
             middleSection.updateVoiceInputButtonImage(false)
-            
             print("Stop Recording")
         }
     }
@@ -139,7 +144,7 @@ private extension TranslateViewController {
 
 // MARK: - Functions for Audio
 extension TranslateViewController: AVAudioPlayerDelegate {
-    func playAudio(data: Data) {
+    func playAudio(data: Data, type: Type) {
         do {
             
             try AVAudioSession.sharedInstance().setCategory(AVAudioSession.Category.playback)
@@ -147,24 +152,38 @@ extension TranslateViewController: AVAudioPlayerDelegate {
             
             // Initialize the audio player with the downloaded audio data
             audioPlayer = try AVAudioPlayer(data: data)
+            audioPlayer?.delegate = self
             audioPlayer?.prepareToPlay()
             audioPlayer?.volume = 5.0
             audioPlayer?.play()
+            
+            whatIsPlayingNow = type
         } catch {
             print("Failed to create audio player: \(error)")
         }
     }
     
+    func stopAudio() {
+        audioPlayer?.stop()
+        audioPlayer = nil
+        audioPlayer?.delegate = nil
+        
+        middleSection.updateSourceLanguagePronunciationPlayButtonImage(isAudioPlaying: false)
+        bottomSection.updateTargetLanguagePronunciationPlayButtonImage(isAudioPlaying: false)
+    }
     
     // Implement AVAudioPlayerDelegate "did finish" callback to cleanup and notify listener of completion.
     func audioPlayerDidFinishPlaying(_ player: AVAudioPlayer, successfully flag: Bool) {
         print(flag)
-        self.audioPlayer?.delegate = nil
-        self.audioPlayer = nil
+        if flag {
+            stopAudio()
+        } else {
+            print("정상적으로 재생이 종료되지 않았습니다.")
+        }
     }
     
     func audioPlayerDecodeErrorDidOccur(_ player: AVAudioPlayer, error: Error?) {
-        print(error)
+        print("ERROR - \(error?.localizedDescription)")
     }
 }
 
@@ -239,15 +258,34 @@ extension TranslateViewController: MiddleSectionOfTranslateDelegate {
     
     func playPronumciationSound(_ inputText: String) {
         print(inputText)
-        AudioManager().getAudioContent(inputText, TranslationManager.sourceLanguage, .source) { result in
+        AudioManager().getAudioContent(inputText, TranslationManager.sourceLanguage, .source) {[weak self] result, type in
+            guard let weakSelf = self else { return }
+            guard let type = type else { return }
+            
             switch result {
             case .success(let audioData):
                 print(audioData)
                 DispatchQueue.main.async {
-                    self.playAudio(data: audioData)
+                    
+                    // 오디오 재생중일 시 멈춤
+                    if let isPlaying = weakSelf.audioPlayer?.isPlaying {
+                        if isPlaying && type == weakSelf.whatIsPlayingNow {
+                            weakSelf.stopAudio()
+                            return
+                        }
+                    }
+                    
+                    weakSelf.playAudio(data: audioData, type: type)
+                    weakSelf.middleSection.updateSourceLanguagePronunciationPlayButtonImage(isAudioPlaying: true)
                 }
             case .failure(let error):
                 print(error)
+                DispatchQueue.main.async {
+                    weakSelf.middleSection.updateSourceLanguagePronunciationPlayButtonImage(isAudioPlaying: false)
+                }
+            }
+            DispatchQueue.main.async {
+                weakSelf.bottomSection.updateTargetLanguagePronunciationPlayButtonImage(isAudioPlaying: false)
             }
         }
     }
@@ -257,6 +295,8 @@ extension TranslateViewController: MiddleSectionOfTranslateDelegate {
     }
     
     func voiceInputButtonTapped(_ inputTextView: UITextView) {
+        stopAudio()
+        
         requestAuthorization()
         
         if audioEngine.isRunning {
@@ -282,6 +322,13 @@ extension TranslateViewController: MiddleSectionOfTranslateDelegate {
             switch result {
             case .success(let response):
                 DispatchQueue.main.async {
+                    
+                    if let isPlaying = weakSelf.audioPlayer?.isPlaying {
+                        if isPlaying {
+                            weakSelf.stopAudio()
+                        }
+                    }
+                    
                     weakSelf.bottomSection.updateResultLabel(response.translatedText)
                     weakSelf.bottomSection.updateFavouriteButton()
                     weakSelf.bottomSection.isHidden = false
@@ -301,7 +348,6 @@ extension TranslateViewController: MiddleSectionOfTranslateDelegate {
                 print(error)
             }
         }
-        
     }
 }
 
@@ -427,15 +473,32 @@ extension TranslateViewController: SFSpeechRecognizerDelegate {
 extension TranslateViewController: BottomSectionOfTranslateDelegate {
     func playPronumciationSound(_ resultLabelText: String?) {
         guard let translatedText = resultLabelText else { return }
-        AudioManager().getAudioContent(translatedText, TranslationManager.targetLanguage, .target) { result in
+        AudioManager().getAudioContent(translatedText, TranslationManager.targetLanguage, .target) { [weak self] result, type in
+            guard let weakSelf = self else { return }
+            guard let type = type else { return }
+
             switch result {
             case .success(let audioData):
                 print(audioData)
                 DispatchQueue.main.async {
-                    self.playAudio(data: audioData)
+                    
+                    if let isPlaying = weakSelf.audioPlayer?.isPlaying {
+                        if isPlaying && type == weakSelf.whatIsPlayingNow {
+                            weakSelf.stopAudio()
+                            return
+                        }
+                    }
+                    weakSelf.playAudio(data: audioData, type: type)
+                    weakSelf.bottomSection.updateTargetLanguagePronunciationPlayButtonImage(isAudioPlaying: true)
                 }
             case .failure(let error):
                 print(error)
+                DispatchQueue.main.async {
+                    weakSelf.bottomSection.updateTargetLanguagePronunciationPlayButtonImage(isAudioPlaying: false)
+                }
+            }
+            DispatchQueue.main.async {
+                weakSelf.middleSection.updateSourceLanguagePronunciationPlayButtonImage(isAudioPlaying: false)
             }
         }
     }

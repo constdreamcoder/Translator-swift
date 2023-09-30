@@ -12,7 +12,7 @@ struct AudioManager {
         _ text: String = "",
         _ language: Language = .ko,
         _ type: Type,
-        completion: @escaping (Result<Data, NetworkError>) -> Void
+        completion: @escaping (Result<Data, NetworkError>, Type?) -> Void
     ) {
         
         guard let request = APIManager().setupURLRequest(
@@ -28,7 +28,7 @@ struct AudioManager {
                 "language": language.languageCode
             ]
         ) else {
-            completion(.failure(.invalidRequest))
+            completion(.failure(.invalidRequest), nil)
             return
         }
         
@@ -38,7 +38,7 @@ struct AudioManager {
             if let error = error,
                let statusCode = (response as? HTTPURLResponse)?.statusCode,
                successRange.contains(statusCode) {
-                completion(.failure(.requestFailed(error)))
+                completion(.failure(.requestFailed(error)), nil)
                 return
             }
             
@@ -59,10 +59,10 @@ struct AudioManager {
                 }
                 
                 let audioData = try Data(contentsOf: localURL)
-                completion(.success(audioData))
+                completion(.success(audioData), type)
             } catch {
                 print("Failed to read downloaded audio data: \(error)")
-                completion(.failure(.downloadingFailed(error)))
+                completion(.failure(.downloadingFailed(error)), nil)
             }
         }
         

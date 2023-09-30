@@ -159,7 +159,7 @@ private extension TopSectionOfTranslate {
     @objc func swapButtonTapped() {
         print(#function)
         
-        UIView.animate(withDuration: 0.5) { [weak self] in
+        UIView.animate(withDuration: 0.35) { [weak self] in
             guard let weakSelf = self else { return }
 
             weakSelf.languageSwapButton.imageView?.transform = (weakSelf.languageSwapButton.imageView?.transform.rotated(by: .pi))!

@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import AVFoundation
 
 protocol BottomSectionOfTranslateDelegate: AnyObject {
     func playPronumciationSound(_ resultLabelText: String?)
@@ -17,7 +18,7 @@ protocol BottomSectionOfTranslateDelegate: AnyObject {
 final class BottomSectionOfTranslate: UIView {
     
     weak var delegate: BottomSectionOfTranslateDelegate?
-    
+
     private lazy var targetLangaugeLabel: UILabel = {
         let label = UILabel()
         label.text = TranslationManager.targetLanguage.language
@@ -184,6 +185,16 @@ extension BottomSectionOfTranslate {
     
     func updateResultLabel(_ translatedText: String?) {
         resultLabel.text = translatedText
+    }
+    
+    func updateTargetLanguagePronunciationPlayButtonImage(isAudioPlaying: Bool = false) {
+        let imageConfiguration = UIImage.SymbolConfiguration(pointSize: 28, weight: .medium, scale: .large)
+        
+        if isAudioPlaying {
+            targetLanguagePronunciationPlayButton.setImage(UIImage(systemName: "stop.fill", withConfiguration: imageConfiguration), for: .normal)
+        } else {
+            targetLanguagePronunciationPlayButton.setImage(UIImage(systemName: "speaker.wave.1", withConfiguration: imageConfiguration), for: .normal)
+        }
     }
     
     func updateFavouriteButton(_ isFavourite: Bool = false) {

@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import AVFoundation
 
 protocol MiddleSectionOfTranslateDelegate: AnyObject {
     func playPronumciationSound(_ inputText: String)
@@ -204,6 +205,18 @@ extension MiddleSectionOfTranslate {
         voiceInputButton.isEnabled = isEnabled
     }
     
+    func updateSourceLanguagePronunciationPlayButtonImage( isAudioPlaying: Bool = false) {
+        
+        let imageConfiguration = UIImage.SymbolConfiguration(pointSize: 28, weight: .medium, scale: .large)
+        
+        if isAudioPlaying {
+            sourceLanguagePronunciationPlayButton.setImage(UIImage(systemName: "stop.fill", withConfiguration: imageConfiguration), for: .normal)
+        } else {
+            sourceLanguagePronunciationPlayButton.setImage(UIImage(systemName: "speaker.wave.1", withConfiguration: imageConfiguration), for: .normal)
+        }
+        
+    }
+    
     func updateVoiceInputButtonImage(_ recording: Bool = false, availability: Bool = true) {
         print(#function)
         let imageConfiguration = UIImage.SymbolConfiguration(pointSize: 16, weight: .medium, scale: .large)
@@ -255,7 +268,7 @@ extension MiddleSectionOfTranslate {
         }
     }
     
-    func isAllUserEventsEnabled(isEnabled: Bool) {
+    func isAllUserEventsEnabled(isEnabled: Bool = false) {
         sourceLanguagePronunciationPlayButton.isEnabled = isEnabled
         clearInputButton.isEnabled = isEnabled
         translateButton.isEnabled = isEnabled

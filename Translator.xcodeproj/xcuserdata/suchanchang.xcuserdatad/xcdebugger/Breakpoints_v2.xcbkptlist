@@ -14,8 +14,8 @@
             filePath = "Translator/TranslateViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "462"
-            endingLineNumber = "462"
+            startingLineNumber = "525"
+            endingLineNumber = "525"
             landmarkName = "favouriteButtonTapped(_:)"
             landmarkType = "7">
          </BreakpointContent>
