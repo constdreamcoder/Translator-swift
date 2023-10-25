@@ -201,6 +201,13 @@ extension MiddleSectionOfTranslate {
         }
     }
     
+    func updateInputTextView(_ inputView: String) {
+        DispatchQueue.main.async { [weak self] in
+            guard let weakSelf = self else { return }
+            weakSelf.inputTextView.text = inputView
+        }
+    }
+    
     func isVoiceInputButtonEnabled(_ isEnabled: Bool) {
         voiceInputButton.isEnabled = isEnabled
     }

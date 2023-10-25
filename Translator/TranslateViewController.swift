@@ -206,6 +206,47 @@ extension TranslateViewController: TopSectionOfTranslateDelegate {
         TranslationManager.sourceLanguage = sourceLanguage
         prepareRecognizer(identifier: sourceLanguage.languageIdentifier)
         TranslationManager.targetLanguage = targetLanguage
+        
+        if !TranslationManager.inputText.isEmpty {
+            TranslationManager.inputText = TranslationManager.translatedText
+            
+            middleSection.updateInputTextView(TranslationManager.inputText)
+            
+            let inputText = TranslationManager.inputText.trimmingCharacters(in: .whitespacesAndNewlines)
+            
+            // swap 후 재번역
+            translateManager.translate(inputText) { [weak self] result in
+                guard let weakSelf = self else { return }
+                switch result {
+                case .success(let response):
+                    DispatchQueue.main.async {
+                        
+                        if let isPlaying = weakSelf.audioPlayer?.isPlaying {
+                            if isPlaying {
+                                weakSelf.stopAudio()
+                            }
+                        }
+                        
+                        weakSelf.bottomSection.updateResultLabel(response.translatedText)
+                        weakSelf.bottomSection.updateFavouriteButton()
+                        weakSelf.bottomSection.isHidden = false
+                    }
+                    
+                    let newHistoryModel = CustomCellModel(
+                        sourceLanguage: TranslationManager.sourceLanguage,
+                        targetLanguage: TranslationManager.targetLanguage,
+                        inputText: TranslationManager.inputText,
+                        translateText: response.translatedText,
+                        isFavourite: false
+                    )
+                    
+                    UserDefaults.standard.historyList = [newHistoryModel] + UserDefaults.standard.historyList
+                    
+                case .failure(let error):
+                    print(error)
+                }
+            }
+        }
     }
     
     func stackViewTapped(
