@@ -29,7 +29,7 @@ Swift 언어를 활용한 번역기 앱
 - 음성 텍스트 입력 기능
   - Speech 프레임워크 사용
 - 다국어 지원(한국어, 영어, 일본어, 중국어)
-  - Localiztion 이용
+  - Localization 이용
 - 변역한 내용 기록 기능
 - 번역된 내용 저장 기능
 - 대화 기능(**구현 예정**)
@@ -48,13 +48,18 @@ Swift 언어를 활용한 번역기 앱
 <div align='left'>
   <img src="https://img.shields.io/badge/node.js-339933?style=for-the-badge&logo=Node.js&logoColor=white">
   <img src="https://img.shields.io/badge/express-blue?style=for-the-badge&logo=express&logoColor=000000">
-  <img src="https://img.shields.io/badge/swagger-85EA2D?style=for-the-badge&logo=swagger&logoColor=FFFFFF">
 </div>
 
 ### Deployment
 
 <div align='left'>
   <img src="https://img.shields.io/badge/google cloud-4285F4?style=for-the-badge&logo=googlecloud&logoColor=white">
+</div>
+
+### Documentation
+
+<div align='left'>
+  <img src="https://img.shields.io/badge/swagger-85EA2D?style=for-the-badge&logo=swagger&logoColor=FFFFFF">
 </div>
 
 ## 📌 커밋 메세지 룰입니다. 📌
