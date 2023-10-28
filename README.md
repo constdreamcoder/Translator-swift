@@ -1,6 +1,6 @@
 ## 🌏 Swift-Project-Translator(지속 업데이트 중)
 
-Swift 언어를 활용한 번역기 앱
+Swift 언어를 활용한 번역기 앱입니다.
 
 ## 🎨 와이어프레임
 
