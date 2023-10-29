@@ -56,7 +56,7 @@ Swift 언어를 활용한 번역기 앱입니다.
   <img src="https://img.shields.io/badge/google cloud-4285F4?style=for-the-badge&logo=googlecloud&logoColor=white">
 </div>
 
-### Documentation
+### 🔗 [Documentation](https://translatelanguage.shop/api-docs/)
 
 <div align='left'>
   <img src="https://img.shields.io/badge/swagger-85EA2D?style=for-the-badge&logo=swagger&logoColor=FFFFFF">
@@ -77,3 +77,7 @@ Swift 언어를 활용한 번역기 앱입니다.
 ✔ TEST: 테스트 코트, 리펙토링 테스트 코드 추가
 
 ✔ CHORE: 빌드 업무 수정, 패키지 매니저 수정(ex .gitignore 수정 같은 경우)
+
+## 📚 학습한 내용
+
+[정리한 내용 링크 클릭](https://app.gitbook.com/o/LnqPtwg5Deq8SfvlVnEm/s/H6UTy35PLEKIcKro42Lr/translator/translator-1-immutable-decoding)
