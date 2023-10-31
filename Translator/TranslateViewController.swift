@@ -550,8 +550,8 @@ extension TranslateViewController: BottomSectionOfTranslateDelegate {
         view.makeToast("The text has been copied".localized)
     }
     
-    func shareButtonTapped() {
-        let vc = UIActivityViewController(activityItems: ["Check my app at www.myapp.example.com"], applicationActivities: nil)
+    func shareButtonTapped(_ resultLabelText: String?) {
+        let vc = UIActivityViewController(activityItems: [resultLabelText], applicationActivities: nil)
         vc.popoverPresentationController?.sourceView = self.view
         
         self.present(vc, animated: true, completion: nil)

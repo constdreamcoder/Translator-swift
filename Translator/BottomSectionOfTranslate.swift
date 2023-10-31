@@ -11,7 +11,7 @@ import AVFoundation
 protocol BottomSectionOfTranslateDelegate: AnyObject {
     func playPronumciationSound(_ resultLabelText: String?)
     func copyButtonTapped(_ resultLabelText: String?)
-    func shareButtonTapped()
+    func shareButtonTapped(_ resultLabelText: String?)
     func favouriteButtonTapped(_ favouriteButton: UIButton)
 }
 
@@ -223,7 +223,7 @@ private extension BottomSectionOfTranslate {
     
     @objc func shareButtonTapped() {
         print(#function)
-        delegate?.shareButtonTapped()
+        delegate?.shareButtonTapped(resultLabel.text)
     }
     
     @objc func favouriteButtonTapped() {

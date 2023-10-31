@@ -34,7 +34,7 @@ extension TranslationManager {
             completion(.failure(.invalidRequest))
             return
         }
-                        
+                                
         let task = URLSession.shared.dataTask(with: request) { data, response, error in
             let successRange = 200..<300
             if let error = error,
