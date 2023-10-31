@@ -80,4 +80,4 @@ Swift 언어를 활용한 번역기 앱입니다.
 
 ## 📚 학습한 내용
 
-[정리한 내용 링크 클릭](https://app.gitbook.com/o/LnqPtwg5Deq8SfvlVnEm/s/H6UTy35PLEKIcKro42Lr/translator/translator-1-immutable-decoding)
+[정리한 내용 링크 클릭](https://constdreamricher.gitbook.io/today-i-learned/translator/translator-1-immutable-decoding)
