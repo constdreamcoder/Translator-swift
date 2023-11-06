@@ -18,7 +18,7 @@ Swift 언어를 활용한 번역기 앱입니다.
 
 ## 🗺️ 아키텍처
 
-<img width="810" alt="Translator-Architecture" src="https://github.com/constdreamcoder/Translator-swift/assets/95998675/41b998c1-1b43-49a0-a63e-81eb8253e58e">
+<img width="747" alt="Translator-Architecture" src="https://github.com/constdreamcoder/Translator-swift/assets/95998675/87191dee-2d7c-4f68-a2b1-a0be9c97ac23">
 
 ## 📌 구현 기능
 
